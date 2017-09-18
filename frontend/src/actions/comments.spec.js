@@ -27,24 +27,29 @@ describe('comment actions', () => {
   it('addCommentRequest creates an ADD_COMMENT_REQUEST action', () => {
     expect(actions.addCommentRequest()).to.deep.equal({ type: types.ADD_COMMENT_REQUEST });
   });
+
   it('addCommentSuccess creates an ADD_COMMENT_SUCCESS action', () => {
     expect(actions.addCommentSuccess(comment)).to.deep.equal({
       type: types.ADD_COMMENT_SUCCESS,
       comment,
     });
   });
+
   it('editCommentRequest creates an EDIT_COMMENT_REQUEST action', () => {
     expect(actions.editCommentRequest()).to.deep.equal({ type: types.EDIT_COMMENT_REQUEST });
   });
+
   it('editCommentSuccess creates an EDIT_COMMENT_SUCCESS action', () => {
     expect(actions.editCommentSuccess(comment)).to.deep.equal({
       type: types.EDIT_COMMENT_SUCCESS,
       comment,
     });
   });
+
   it('deleteCommentRequest creates an DELETE_COMMENT_REQUEST action', () => {
     expect(actions.deleteCommentRequest()).to.deep.equal({ type: types.DELETE_COMMENT_REQUEST });
   });
+
   it('deleteCommentSuccess creates an DELETE_COMMENT_SUCCESS action', () => {
     comment.deleted = true;
     expect(actions.deleteCommentSuccess(comment)).to.deep.equal({
@@ -52,9 +57,11 @@ describe('comment actions', () => {
       comment,
     });
   });
+
   it('upvoteCommentRequest creates an UPVOTE_COMMENT_REQUEST action', () => {
     expect(actions.upvoteCommentRequest()).to.deep.equal({ type: types.UPVOTE_COMMENT_REQUEST });
   });
+
   it('upvoteCommentSuccess creates an UPVOTE_COMMENT_SUCCESS action', () => {
     expect(actions.upvoteCommentSuccess(comment)).to.deep.equal({
       type: types.UPVOTE_COMMENT_SUCCESS,
