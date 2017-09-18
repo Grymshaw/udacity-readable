@@ -43,7 +43,7 @@ describe('comment actions', () => {
     });
   });
   it('deleteCommentRequest creates an DELETE_COMMENT_REQUEST action', () => {
-    expect(actions.deleteCommentRequest()).to.deep.equal({ type: types.EDIT_COMMENT_DELETE });
+    expect(actions.deleteCommentRequest()).to.deep.equal({ type: types.DELETE_COMMENT_REQUEST });
   });
   it('deleteCommentSuccess creates an DELETE_COMMENT_SUCCESS action', () => {
     comment.deleted = true;

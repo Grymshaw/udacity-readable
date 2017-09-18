@@ -43,7 +43,7 @@ describe('post actions', () => {
     expect(actions.editPostSuccess(post)).to.deep.equal({ type: types.EDIT_POST_SUCCESS, post });
   });
   it('deletePostRequest creates an DELETE_POST_REQUEST action', () => {
-    expect(actions.deletePostRequest()).to.deep.equal({ type: types.EDIT_POST_DELETE });
+    expect(actions.deletePostRequest()).to.deep.equal({ type: types.DELETE_POST_REQUEST });
   });
   it('deletePostSuccess creates an DELETE_POST_SUCCESS action', () => {
     const currentDate = Date.now();
@@ -212,6 +212,49 @@ describe('async post actions', () => {
       { type: types.DOWNVOTE_POST_SUCCESS, post: { post: 'a post' } },
     ];
     return store.dispatch(actions.downvotePost('0')).then(() => {
+      const storeActions = store.getActions();
+      expect(storeActions.length).to.equal(2);
+      expect(storeActions).to.deep.equal(expectedActions);
+    });
+  });
+
+  it('creates FETCH_ALL_POSTS_SUCCESS when done getting all posts', () => {
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, ['post 1', 'post 2'])));
+    const store = mockStore({});
+    const expectedActions = [
+      { type: types.FETCH_ALL_POSTS_REQUEST },
+      { type: types.FETCH_ALL_COMMENTS_SUCCESS, posts: ['post 1', 'post 2'] },
+    ];
+    return store.dispatch(actions.fetchAllPosts()).then(() => {
+      const storeActions = store.getActions();
+      expect(storeActions.length).to.equal(2);
+      expect(storeActions).to.deep.equal(expectedActions);
+    });
+  });
+
+  it('creates FETCH_CATEGORY_POSTS_SUCCESS when done getting all posts', () => {
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, ['post 2', 'post 4'])));
+    const store = mockStore({});
+    const expectedActions = [
+      { type: types.FETCH_CATEGORY_POSTS_REQUEST },
+      { type: types.FETCH_CATEGORY_COMMENTS_SUCCESS, posts: ['post 2', 'post 4'] },
+    ];
+    return store.dispatch(actions.fetchCategoryPosts('react')).then(() => {
+      const storeActions = store.getActions();
+      expect(storeActions.length).to.equal(2);
+      expect(storeActions).to.deep.equal(expectedActions);
+    });
+  });
+
+  it('creates FETCH_POST_COMMENTS_SUCCESS when done getting all posts', () => {
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, ['comment 2', 'comment 4'])));
+    const store = mockStore({});
+    const expectedActions = [
+      { type: types.FETCH_POST_COMMENTS_REQUEST },
+      { type: types.FETCH_POST_COMMENTS_SUCCESS, comments: ['comment 2', 'comment 4'] },
+    ];
+    const postId = '2';
+    return store.dispatch(actions.fetchPostComments(postId)).then(() => {
       const storeActions = store.getActions();
       expect(storeActions.length).to.equal(2);
       expect(storeActions).to.deep.equal(expectedActions);
