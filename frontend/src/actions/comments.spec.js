@@ -104,8 +104,9 @@ describe('async comment actions', () => {
       author: 'me',
       body: 'mock body here',
     };
-    const response = JSON.stringify(Object.assign({}, comment, { deleted: false, voteScore: 1 }));
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, response)));
+    const response = Object.assign({}, comment, { deleted: false, voteScore: 1 });
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(response))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.ADD_COMMENT_REQUEST },
@@ -124,7 +125,7 @@ describe('async comment actions', () => {
       body: 'edited mock body',
       timestamp: currentDate,
     };
-    const response = JSON.stringify({
+    const response = {
       id: '0',
       parentId: '1',
       author: 'me',
@@ -132,8 +133,9 @@ describe('async comment actions', () => {
       timestamp: currentDate,
       deleted: false,
       voteScore: 1,
-    });
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, response)));
+    };
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(response))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.EDIT_COMMENT_REQUEST },
@@ -143,11 +145,13 @@ describe('async comment actions', () => {
       .then(() => {
         const storeActions = store.getActions();
         expect(storeActions.length).to.equal(2);
-        expect(store.actions).to.deep.equal(expectedActions);
+        expect(storeActions).to.deep.equal(expectedActions);
       });
   });
   it('creates DELETE_COMMENT_SUCCESS when done deleting comment', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, { comment: 'a comment' })));
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify({ comment: 'a comment' }))),
+    );
     const store = mockStore({});
     const expectedActions = [
       { type: types.DELETE_COMMENT_REQUEST },
@@ -160,7 +164,9 @@ describe('async comment actions', () => {
     });
   });
   it('creates UPVOTE_COMMENT_SUCCESS when done upvoting comment', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, { comment: 'a comment' })));
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify({ comment: 'a comment' }))),
+    );
     const store = mockStore({});
     const expectedActions = [
       { type: types.UPVOTE_COMMENT_REQUEST },
@@ -173,7 +179,9 @@ describe('async comment actions', () => {
     });
   });
   it('creates DOWNVOTE_COMMENT_SUCCESS when done downvoting comment', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, { comment: 'a comment' })));
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify({ comment: 'a comment' }))),
+    );
     const store = mockStore({});
     const expectedActions = [
       { type: types.DOWNVOTE_COMMENT_REQUEST },
