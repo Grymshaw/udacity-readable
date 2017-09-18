@@ -135,8 +135,9 @@ describe('async post actions', () => {
       category: 'react',
       title: 'mock title',
     };
-    const response = JSON.stringify(Object.assign({}, post, { deleted: false, voteScore: 1 }));
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, response)));
+    const response = Object.assign({}, post, { deleted: false, voteScore: 1 });
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(response))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.ADD_POST_REQUEST },
@@ -155,7 +156,7 @@ describe('async post actions', () => {
       body: 'edited mock body',
       title: 'edited mock title',
     };
-    const response = JSON.stringify({
+    const response = {
       id: '0',
       author: 'me',
       body: 'edited mock body',
@@ -164,8 +165,9 @@ describe('async post actions', () => {
       title: 'edited mock title',
       deleted: false,
       voteScore: 1,
-    });
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, response)));
+    };
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify(response))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.EDIT_POST_REQUEST },
@@ -175,11 +177,11 @@ describe('async post actions', () => {
       .then(() => {
         const storeActions = store.getActions();
         expect(storeActions.length).to.equal(2);
-        expect(store.actions).to.deep.equal(expectedActions);
+        expect(storeActions).to.deep.equal(expectedActions);
       });
   });
   it('creates DELETE_POST_SUCCESS when done deleting post', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, { post: 'a post' })));
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify({ post: 'a post' }))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.DELETE_POST_REQUEST },
@@ -192,7 +194,7 @@ describe('async post actions', () => {
     });
   });
   it('creates UPVOTE_POST_SUCCESS when done upvoting post', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, { post: 'a post' })));
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify({ post: 'a post' }))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.UPVOTE_POST_REQUEST },
@@ -205,7 +207,7 @@ describe('async post actions', () => {
     });
   });
   it('creates DOWNVOTE_POST_SUCCESS when done downvoting post', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, { post: 'a post' })));
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify({ post: 'a post' }))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.DOWNVOTE_POST_REQUEST },
@@ -219,11 +221,11 @@ describe('async post actions', () => {
   });
 
   it('creates FETCH_ALL_POSTS_SUCCESS when done getting all posts', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, ['post 1', 'post 2'])));
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['post 1', 'post 2']))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.FETCH_ALL_POSTS_REQUEST },
-      { type: types.FETCH_ALL_COMMENTS_SUCCESS, posts: ['post 1', 'post 2'] },
+      { type: types.FETCH_ALL_POSTS_SUCCESS, posts: ['post 1', 'post 2'] },
     ];
     return store.dispatch(actions.fetchAllPosts()).then(() => {
       const storeActions = store.getActions();
@@ -232,22 +234,8 @@ describe('async post actions', () => {
     });
   });
 
-  it('creates FETCH_CATEGORY_POSTS_SUCCESS when done getting all posts', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, ['post 2', 'post 4'])));
-    const store = mockStore({});
-    const expectedActions = [
-      { type: types.FETCH_CATEGORY_POSTS_REQUEST },
-      { type: types.FETCH_CATEGORY_COMMENTS_SUCCESS, posts: ['post 2', 'post 4'] },
-    ];
-    return store.dispatch(actions.fetchCategoryPosts('react')).then(() => {
-      const storeActions = store.getActions();
-      expect(storeActions.length).to.equal(2);
-      expect(storeActions).to.deep.equal(expectedActions);
-    });
-  });
-
   it('creates FETCH_POST_COMMENTS_SUCCESS when done getting all posts', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, ['comment 2', 'comment 4'])));
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['comment 2', 'comment 4']))));
     const store = mockStore({});
     const expectedActions = [
       { type: types.FETCH_POST_COMMENTS_REQUEST },
@@ -260,119 +248,18 @@ describe('async post actions', () => {
       expect(storeActions).to.deep.equal(expectedActions);
     });
   });
+
+  it('creates FETCH_CATEGORY_POSTS_SUCCESS when done getting all posts', () => {
+    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['post 2', 'post 4']))));
+    const store = mockStore({});
+    const expectedActions = [
+      { type: types.FETCH_CATEGORY_POSTS_REQUEST },
+      { type: types.FETCH_CATEGORY_POSTS_SUCCESS, posts: ['post 2', 'post 4'] },
+    ];
+    return store.dispatch(actions.fetchCategoryPosts('react')).then(() => {
+      const storeActions = store.getActions();
+      expect(storeActions.length).to.equal(2);
+      expect(storeActions).to.deep.equal(expectedActions);
+    });
+  });
 });
-
-
-// describe('post actions', () => {
-//   it('addPost should create an ADD_POST action', () => {
-//     const currentDate = Date.now();
-//     const post = {
-//       author: 'Kyle',
-//       body: 'Sample post body',
-//       category: 'react',
-//       title: 'Sample post title',
-//       timestamp: currentDate,
-//     };
-//     const expectedAction = {
-//       type: types.ADD_POST,
-//       id: '0',
-//       author: 'Kyle',
-//       body: 'Sample post body',
-//       category: 'react',
-//       title: 'Sample post title',
-//       timestamp: currentDate,
-//     };
-//     expect(actions.addPost(post)).to.deep.equal(expectedAction);
-//     expect(actions.addPost(post)).to.deep.equal(Object.assign({}, expectedAction, { id: '1' }));
-//   });
-
-//   it('editPost should create an EDIT_POST action', () => {
-//     const post = {
-//       body: 'Sample edited post body',
-//       title: 'Sample edited post title',
-//     };
-//     const expectedAction = {
-//       type: types.EDIT_POST,
-//       id: '0',
-//       body: 'Sample edited post body',
-//       title: 'Sample edited post title',
-//     };
-//     expect(actions.editPost('0', post)).to.deep.equal(expectedAction);
-//   });
-
-//   it('deletePost should create a DELETE_POST action', () => {
-//     expect(actions.deletePost('0')).to.deep.equal({ type: types.DELETE_POST, id: '0' });
-//   });
-
-//   it('upvotePost should create an UPVOTE_POST action', () => {
-//     expect(actions.upvotePost('0')).to.deep.equal({ type: types.UPVOTE_POST, id: '0' });
-//   });
-
-//   it('downvotePost should create a DOWNVOTE_POST action', () => {
-//     expect(actions.downvotePost('0')).to.deep.equal({ type: types.DOWNVOTE_POST, id: '0' });
-//   });
-
-//   it('fetchPostsRequest should create a FETCH_ALL_POSTS_REQUEST action', () => {
-//     expect(actions.fetchAllPostsRequest()).to.deep.equal({
-//       type: types.FETCH_ALL_POSTS_REQUEST,
-//     });
-//   });
-
-//   it('fetchCategoryPostsRequest should create a FETCH_CATEGORY_POSTS_REQUEST action', () => {
-//     expect(actions.fetchCategoryPostsRequest()).to.deep.equal({
-//       type: types.FETCH_CATEGORY_POSTS_REQUEST,
-//     });
-//   });
-// });
-
-// describe('async post actions', () => {
-//   let middlewares;
-//   let store;
-//   let mockResponse;
-
-//   beforeEach(() => {
-//     middlewares = [thunk];
-//     store = configureMockStore(middlewares);
-//     mockResponse = (status, statusText, response) => (
-//       new window.Response(response, {
-//         status,
-//         statusText,
-//         headers: {
-//           Authorization: 'anything',
-//           'Content-Type': 'application/json',
-//         },
-//       })
-//     );
-//   });
-
-//   afterEach(() => {
-//     window.fetch.mockRestore();
-//   });
-
-//   it('creates FETCH_ALL_POSTS_SUCCESS when fetching all posts has completed', () => {
-//     window.fetch = jest.fn().mockImplementation(() => (
-//       Promise.resolve(mockResponse(200, null, '{ "posts": { "id": "0" } }'))
-//     ));
-//     return store.dispatch(actions.fetchAllPosts())
-//       .then(() => {
-//         const expectedActions = store.getActions();
-//         expect(expectedActions.length).to.equal(2);
-//         expect(expectedActions).to.include(types.FETCH_POSTS_REQUEST);
-//         expect(expectedActions).to.include(types.FETCH_POSTS_SUCCESS);
-//       });
-//   });
-
-//   it('creates FETCH_CATEGORY_POSTS_SUCCESS
-//    when fetching a category\'s posts has completed', () => {
-//     window.fetch = jest.fn().mockImplementation(() => (
-//       Promise.resolve(mockResponse(200, null, '{ "posts": { "id": "0" } }'))
-//     ));
-//     return store.dispatch(actions.fetchCategoryPosts())
-//       .then(() => {
-//         const expectedActions = store.getActions();
-//         expect(expectedActions.length).to.equal(2);
-//         expect(expectedActions.length).to.include(types.FETCH_POSTS_REQUEST);
-//         expect(expectedActions.length).to.include(types.FETCH_POSTS_SUCCESS);
-//       });
-//   });
-// });
