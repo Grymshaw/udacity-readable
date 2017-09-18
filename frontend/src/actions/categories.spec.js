@@ -40,8 +40,10 @@ describe('async categories actions', () => {
   });
 
   it('creates FETCH_CATEGORIES_SUCCESS when fetching categories has completed', () => {
-    window.fetch = jest.fn().mockImplementation(() =>
+    window.fetch = jest.fn(() =>
       Promise.resolve(mockResponse(200, null, '{"categories": [ { "react": "react" } ]}')));
+    // window.fetch = jest.fn().mockImplementation(() =>
+    //   Promise.resolve(mockResponse(200, null, '{"categories": [ { "react": "react" } ]}')));
 
     const store = mockStore({});
     const expectedActions = [
