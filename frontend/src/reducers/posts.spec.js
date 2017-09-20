@@ -1,6 +1,8 @@
+/* eslint "no-undef": 0 */
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 
+import * as types from '../constants/ActionTypes';
 import posts from './posts';
 
 describe('posts reducer', () => {
@@ -92,6 +94,7 @@ describe('posts reducer', () => {
       const stateAfter = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'new post body',
             timestamp: currentDate,
@@ -107,6 +110,7 @@ describe('posts reducer', () => {
       const stateBefore = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'new post body',
             timestamp: currentDate,
@@ -114,6 +118,7 @@ describe('posts reducer', () => {
             voteCount: 1,
           },
           '1': {
+            id: '1',
             author: 'not me',
             body: 'second post body',
             timestamp: currentDate + 10,
@@ -142,6 +147,7 @@ describe('posts reducer', () => {
       const stateAfter = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'edited post body',
             timestamp: editDate,
@@ -149,6 +155,7 @@ describe('posts reducer', () => {
             voteCount: 1,
           },
           '1': {
+            id: '1',
             author: 'not me',
             body: 'second post body',
             timestamp: currentDate + 10,
@@ -164,6 +171,7 @@ describe('posts reducer', () => {
       const stateBefore = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'post body',
             timestamp: currentDate,
@@ -177,6 +185,7 @@ describe('posts reducer', () => {
         type: types.DELETE_POST_SUCCESS,
         post: {
           id: '0',
+          author: 'me',
           body: 'post body',
           timestamp: currentDate,
           deleted: true,
@@ -190,6 +199,7 @@ describe('posts reducer', () => {
       const stateAfter = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'post body',
             timestamp: currentDate,
@@ -199,12 +209,17 @@ describe('posts reducer', () => {
         },
         isRequestPending: false,
       };
+
+      console.log(stateAfter);
+      console.log(posts(stateBefore, action));
+
       expect(posts(stateBefore, action)).to.deep.equal(stateAfter);
     });
     it('should handle UPVOTE_POST_SUCCESS', () => {
       const stateBefore = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'post body',
             timestamp: currentDate,
@@ -232,10 +247,11 @@ describe('posts reducer', () => {
       const stateAfter = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'post body',
             timestamp: currentDate,
-            deleted: true,
+            deleted: false,
             voteCount: 2,
           },
         },
@@ -247,6 +263,7 @@ describe('posts reducer', () => {
       const stateBefore = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'post body',
             timestamp: currentDate,
@@ -274,10 +291,11 @@ describe('posts reducer', () => {
       const stateAfter = {
         posts: {
           '0': {
+            id: '0',
             author: 'me',
             body: 'post body',
             timestamp: currentDate,
-            deleted: true,
+            deleted: false,
             voteCount: 0,
           },
         },

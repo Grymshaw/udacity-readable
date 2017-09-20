@@ -2,6 +2,7 @@
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 
+import * as types from '../constants/ActionTypes';
 import comments from './comments';
 
 describe('comments reducer', () => {
@@ -94,6 +95,7 @@ describe('comments reducer', () => {
       const stateAfter = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'new comment body',
@@ -111,6 +113,7 @@ describe('comments reducer', () => {
       const stateBefore = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'new comment body',
@@ -120,6 +123,7 @@ describe('comments reducer', () => {
             voteCount: 1,
           },
           '1': {
+            id: '1',
             parentId: '1',
             author: 'not me',
             body: 'second comment body',
@@ -152,6 +156,7 @@ describe('comments reducer', () => {
       const stateAfter = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'edited comment body',
@@ -161,6 +166,7 @@ describe('comments reducer', () => {
             voteCount: 1,
           },
           '1': {
+            id: '1',
             parentId: '1',
             author: 'not me',
             body: 'second comment body',
@@ -172,13 +178,13 @@ describe('comments reducer', () => {
         },
         isRequestPending: false,
       };
-
       expect(comments(stateBefore, action)).to.deep.equal(stateAfter);
     });
     it('should handle DELETE_COMMENT_SUCCESS', () => {
       const stateBefore = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'comment body',
@@ -194,7 +200,7 @@ describe('comments reducer', () => {
         type: types.DELETE_COMMENT_SUCCESS,
         comment: {
           id: '0',
-          parentId: '0',
+          parentId: '1',
           author: 'me',
           body: 'comment body',
           timestamp: currentDate,
@@ -210,6 +216,7 @@ describe('comments reducer', () => {
       const stateAfter = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'comment body',
@@ -227,6 +234,7 @@ describe('comments reducer', () => {
       const stateBefore = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'comment body',
@@ -258,11 +266,12 @@ describe('comments reducer', () => {
       const stateAfter = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'comment body',
             timestamp: currentDate,
-            deleted: true,
+            deleted: false,
             parentDeleted: false,
             voteCount: 2,
           },
@@ -275,6 +284,7 @@ describe('comments reducer', () => {
       const stateBefore = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'comment body',
@@ -306,11 +316,12 @@ describe('comments reducer', () => {
       const stateAfter = {
         comments: {
           '0': {
+            id: '0',
             parentId: '1',
             author: 'me',
             body: 'comment body',
             timestamp: currentDate,
-            deleted: true,
+            deleted: false,
             parentDeleted: false,
             voteCount: 0,
           },
