@@ -210,9 +210,6 @@ describe('posts reducer', () => {
         isRequestPending: false,
       };
 
-      console.log(stateAfter);
-      console.log(posts(stateBefore, action));
-
       expect(posts(stateBefore, action)).to.deep.equal(stateAfter);
     });
     it('should handle UPVOTE_POST_SUCCESS', () => {

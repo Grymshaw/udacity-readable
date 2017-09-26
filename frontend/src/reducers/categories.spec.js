@@ -36,8 +36,6 @@ describe('categories reducer', () => {
     deepFreeze(action);
 
     const result = categories(stateBefore, action);
-    console.log(stateBefore);
-    console.log(result);
 
     expect(result).to.deep.equal({ categories: ['react', 'redux'], isRequestPending: false });
   });
