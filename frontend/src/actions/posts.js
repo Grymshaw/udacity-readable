@@ -1,5 +1,4 @@
 /* eslint "no-undef": 0 */
-
 import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 
