@@ -1,19 +1,24 @@
-import '../node_modules/normalize.css/normalize.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
 
 import App from './components/App';
-import './index.css';
-import rootReducer from './reducers/index';
+import { history, store } from './store';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+import './index.css';
+import '../node_modules/normalize.css/normalize.css';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+      <div>
+        <Route exact path="/">
+          <App />
+        </Route>
+      </div>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),
 );
