@@ -29,10 +29,6 @@ describe('<Navbar />', () => {
     it('renders a <PrimaryNav />', () => {
       expect(primaryNav.length).to.equal(1);
     });
-
-    it('rendered `PrimaryNav` receives no props', () => {
-      expect(Object.keys(primaryNav.props()).length).to.equal(0);
-    });
   });
 
   describe('rendered `Subnav`', () => {
@@ -40,12 +36,9 @@ describe('<Navbar />', () => {
     beforeEach(() => {
       subnav = wrapper.find(Subnav);
     });
+
     it('renders a <SubNav />', () => {
       expect(wrapper.find(Subnav).length).to.equal(1);
-    });
-
-    it('rendered `Subnav` receives no props', () => {
-      expect(Object.keys(subnav.props()).length).to.equal(0);
     });
   });
 });
