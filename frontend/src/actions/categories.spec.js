@@ -20,6 +20,14 @@ describe('async categories actions', () => {
   let mockStore;
   let mockResponse;
 
+  const response = {
+    categories: [
+      { name: 'react', path: 'react' },
+      { name: 'redux', path: 'redux' },
+      { name: 'udacity', path: 'udacity' },
+    ],
+  };
+
   beforeEach(() => {
     middlewares = [thunk];
     mockStore = configureStore(middlewares);
@@ -41,14 +49,12 @@ describe('async categories actions', () => {
 
   it('creates FETCH_CATEGORIES_SUCCESS when fetching categories has completed', () => {
     window.fetch = jest.fn(() =>
-      Promise.resolve(mockResponse(200, null, JSON.stringify({
-        categories: [{ react: 'react' }],
-      }))));
+      Promise.resolve(mockResponse(200, null, JSON.stringify(response))));
 
     const store = mockStore({});
     const expectedActions = [
       { type: types.FETCH_CATEGORIES_REQUEST },
-      { type: types.FETCH_CATEGORIES_SUCCESS, categories: [{ react: 'react' }] },
+      { type: types.FETCH_CATEGORIES_SUCCESS, categories: ['react', 'redux', 'udacity'] },
     ];
 
     return store.dispatch(actions.fetchAllCategories()).then(() => {

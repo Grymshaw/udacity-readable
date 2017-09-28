@@ -1,5 +1,5 @@
 /* eslint "no-undef": 0 */
-
+import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 
 export const fetchCategoriesRequest = () => ({
@@ -21,5 +21,6 @@ export const fetchAllCategories = () => (dispatch) => {
     },
   })
     .then(res => res.json())
-    .then(json => dispatch(fetchCategoriesSuccess(json.categories)));
+    .then(json => json.categories.map(cur => cur.name))
+    .then(categories => dispatch(fetchCategoriesSuccess(categories)));
 };
