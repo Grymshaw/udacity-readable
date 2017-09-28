@@ -13,12 +13,11 @@ Button.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
   children: null,
-  onClick: () => {},
 };
 
 export default Button;

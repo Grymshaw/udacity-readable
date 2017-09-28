@@ -2,11 +2,12 @@
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 
-import * as types from '../constants/ActionTypes';
+// import * as actions from '../actions/navigation';
+// import * as types from '../constants/ActionTypes';
 import AddPostButton from './AddPostButton';
 
 describe('<AddPostButton />', () => {
@@ -16,11 +17,7 @@ describe('<AddPostButton />', () => {
   beforeEach(() => {
     store = configureMockStore()({});
     sinon.spy(store, 'dispatch');
-    wrapper = mount(<Provider store={store}>
-      <AddPostButton>
-        Add post
-      </AddPostButton>
-    </Provider>);
+    wrapper = mount(<AddPostButton store={store}>Add post</AddPostButton>);
   });
 
   afterEach(() => {
@@ -28,16 +25,19 @@ describe('<AddPostButton />', () => {
   });
 
   it('renders successfully', () => {
-    expect(wrapper).to.be.ok;
+    expect(wrapper.length).to.equal(1);
   });
 
-  it('sets the addPost prop on <Button />', () => {
-    wrapper.find('Button').props().addPost();
+  it('sets the onClick prop on <Button />', () => {
+    wrapper.find('Button').props().onClick();
     expect(store.dispatch.callCount).to.equal(1);
-    expect(store.dispatch.calledWith({ type: types.ADD_NEW_POST }));
+    expect(store.dispatch.calledWith({
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: { method: 'push', args: ['/new'] },
+    })).to.equal(true);
   });
 
   it('renders children in the child button', () => {
-    expect(wrapper.find('button').text()).to.equal('Add post')
+    expect(wrapper.find('button').text()).to.equal('Add post');
   });
 });
