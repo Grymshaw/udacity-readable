@@ -81,8 +81,12 @@ describe('<CategoryList />', () => {
     it('receives `onChange` prop from <CategoryList />', () => {
       wrapper.find('DropdownList').first().props().onChange('react');
       expect(store.dispatch.callCount).to.be.above(0);
-      expect(store.dispatch.calledWith({ type: types.CHANGE_CATEGORY, category: 'react' })).to.equal(true);
-      expect(store.getActions()).to.deep.contain({ type: types.CHANGE_CATEGORY, category: 'react' });
+      expect(store.dispatch.calledWith({
+        type: '@@router/CALL_HISTORY_METHOD',
+        payload: { method: 'push', args: ['/react'] },
+      }));
+      // expect(store.dispatch.calledWith({ type: types.CHANGE_CATEGORY, category: 'react' })).to.equal(true);
+      // expect(store.getActions()).to.deep.contain({ type: types.CHANGE_CATEGORY, category: 'react' });
     });
   });
 });

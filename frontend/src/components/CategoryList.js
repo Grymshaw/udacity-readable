@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-import * as navActions from '../actions/navigation';
+// import * as navActions from '../actions/navigation';
 import * as categoryActions from '../actions/categories';
 import DropdownList from './DropdownList';
 
 const mapDispatchToProps = dispatch => ({
   fetchData: () => categoryActions.fetchAllCategories()(dispatch),
-  onChange: category => dispatch(navActions.changeCategory(category)),
+  onChange: category => dispatch(push(category)),
+  // onChange: category => dispatch(navActions.changeCategory(category)),
 });
 
 const mapStateToProps = state => ({

@@ -10,10 +10,17 @@ class DropdownList extends Component {
   render() {
     const { list, onChange } = this.props;
     return (
-      <select onChange={onChange}>
+      <select
+        onChange={e => onChange(e.target.value)}
+      >
         {list && list.length
           ? list.map(item => (
-            <option key={item}>{item}</option>
+            <option
+              key={item}
+              value={item}
+            >
+              {item}
+            </option>
           ))
           : null}
       </select>
