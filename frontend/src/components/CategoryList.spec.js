@@ -45,9 +45,10 @@ describe('<CategoryList />', () => {
     });
     sinon.spy(store, 'dispatch');
     wrapper = mount(
-      <Provider store={store}>
-        <CategoryList />
-      </Provider>);
+      // <Provider store={store}>
+        <CategoryList store={store} />
+      // </Provider>);
+      );
   });
 
   afterEach(() => {
