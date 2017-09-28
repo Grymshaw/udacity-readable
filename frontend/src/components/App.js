@@ -1,11 +1,11 @@
 import React from 'react';
 import 'whatwg-fetch';
 
+import './App.css';
 import AddPostButton from './AddPostButton';
 import CategoryList from './CategoryList';
 import PrimaryNav from './PrimaryNav';
 import Subnav from './Subnav';
-import './App.css';
 
 const comments = [
   {
@@ -46,7 +46,7 @@ const posts = [
   },
 ];
 
-export const App = () => (
+const App = () => (
   <div>
     <PrimaryNav>
       <h3>Readable</h3>
