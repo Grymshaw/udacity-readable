@@ -2,11 +2,6 @@ import React from 'react';
 import 'whatwg-fetch';
 
 import './App.css';
-import AddPostButton from './AddPostButton';
-import CategoryList from './CategoryList';
-import PrimaryNav from './PrimaryNav';
-import SortOrderList from './SortOrderList';
-import Subnav from './Subnav';
 
 const comments = [
   {
