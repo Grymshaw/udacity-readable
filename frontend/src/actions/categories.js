@@ -21,6 +21,6 @@ export const fetchAllCategories = () => (dispatch) => {
     },
   })
     .then(res => res.json())
-    .then(json => json.categories.map(cur => cur.name))
+    .then(json => json.categories.map(cur => ({ name: cur.name, value: cur.path })))
     .then(categories => dispatch(fetchCategoriesSuccess(categories)));
 };

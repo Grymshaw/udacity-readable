@@ -14,6 +14,7 @@ export const editCommentRequest = () => ({ type: types.EDIT_COMMENT_REQUEST });
 export const deleteCommentRequest = () => ({ type: types.DELETE_COMMENT_REQUEST });
 export const upvoteCommentRequest = () => ({ type: types.UPVOTE_COMMENT_REQUEST });
 export const downvoteCommentRequest = () => ({ type: types.DOWNVOTE_COMMENT_REQUEST });
+export const fetchPostCommentsRequest = () => ({ type: types.FETCH_POST_COMMENTS_REQUEST });
 
 /* blank_SUCCESS */
 export const addCommentSuccess = comment => ({
@@ -39,6 +40,11 @@ export const upvoteCommentSuccess = comment => ({
 export const downvoteCommentSuccess = comment => ({
   type: types.DOWNVOTE_COMMENT_SUCCESS,
   comment,
+});
+
+export const fetchPostCommentsSuccess = comments => ({
+  type: types.FETCH_POST_COMMENTS_SUCCESS,
+  comments,
 });
 
 /* thunk action creators */
@@ -94,4 +100,14 @@ export const downvoteComment = id => (dispatch) => {
   })
     .then(res => res.json())
     .then(json => dispatch(downvoteCommentSuccess(json)));
+};
+
+export const fetchPostComments = parentId => (dispatch) => {
+  dispatch(fetchPostCommentsRequest());
+  return fetch(`http://localhost:5001/posts/${parentId}/comments`, {
+    method: 'get',
+    headers: HEADERS,
+  })
+    .then(res => res.json())
+    .then(json => dispatch(fetchPostCommentsSuccess(json)));
 };

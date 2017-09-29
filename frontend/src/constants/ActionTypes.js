@@ -36,10 +36,8 @@ export const FETCH_ALL_POSTS_SUCCESS = 'FETCH_ALL_POSTS_SUCCESS';
 export const FETCH_CATEGORY_POSTS_SUCCESS = 'FETCH_CATEGORY_POSTS_SUCCESS';
 export const FETCH_POST_COMMENTS_SUCCESS = 'FETCH_POST_COMMENTS_SUCCESS';
 
-// navigation
-export const ADD_NEW_POST = 'ADD_NEW_POST';
-export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
-
+// sort order
+export const SET_SORT_ORDER = 'SET_SORT_ORDER';
 
 // // posts
 // export const ADD_POST = 'ADD_POST';

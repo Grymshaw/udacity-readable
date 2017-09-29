@@ -234,20 +234,20 @@ describe('async post actions', () => {
     });
   });
 
-  it('creates FETCH_POST_COMMENTS_SUCCESS when done getting all posts', () => {
-    window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['comment 2', 'comment 4']))));
-    const store = mockStore({});
-    const expectedActions = [
-      { type: types.FETCH_POST_COMMENTS_REQUEST },
-      { type: types.FETCH_POST_COMMENTS_SUCCESS, comments: ['comment 2', 'comment 4'] },
-    ];
-    const postId = '2';
-    return store.dispatch(actions.fetchPostComments(postId)).then(() => {
-      const storeActions = store.getActions();
-      expect(storeActions.length).to.equal(2);
-      expect(storeActions).to.deep.equal(expectedActions);
-    });
-  });
+  // it('creates FETCH_POST_COMMENTS_SUCCESS when done getting all posts', () => {
+  //   window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['comment 2', 'comment 4']))));
+  //   const store = mockStore({});
+  //   const expectedActions = [
+  //     { type: types.FETCH_POST_COMMENTS_REQUEST },
+  //     { type: types.FETCH_POST_COMMENTS_SUCCESS, comments: ['comment 2', 'comment 4'] },
+  //   ];
+  //   const postId = '2';
+  //   return store.dispatch(actions.fetchPostComments(postId)).then(() => {
+  //     const storeActions = store.getActions();
+  //     expect(storeActions.length).to.equal(2);
+  //     expect(storeActions).to.deep.equal(expectedActions);
+  //   });
+  // });
 
   it('creates FETCH_CATEGORY_POSTS_SUCCESS when done getting all posts', () => {
     window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['post 2', 'post 4']))));

@@ -20,7 +20,7 @@ describe('async categories actions', () => {
   let mockStore;
   let mockResponse;
 
-  const response = {
+  const categoriesResponse = {
     categories: [
       { name: 'react', path: 'react' },
       { name: 'redux', path: 'redux' },
@@ -49,12 +49,18 @@ describe('async categories actions', () => {
 
   it('creates FETCH_CATEGORIES_SUCCESS when fetching categories has completed', () => {
     window.fetch = jest.fn(() =>
-      Promise.resolve(mockResponse(200, null, JSON.stringify(response))));
+      Promise.resolve(mockResponse(200, null, JSON.stringify(categoriesResponse))));
 
     const store = mockStore({});
     const expectedActions = [
       { type: types.FETCH_CATEGORIES_REQUEST },
-      { type: types.FETCH_CATEGORIES_SUCCESS, categories: ['react', 'redux', 'udacity'] },
+      { type: types.FETCH_CATEGORIES_SUCCESS,
+        categories: [
+          { name: 'react', value: 'react' },
+          { name: 'redux', value: 'redux' },
+          { name: 'udacity', value: 'udacity' },
+        ],
+      },
     ];
 
     return store.dispatch(actions.fetchAllCategories()).then(() => {

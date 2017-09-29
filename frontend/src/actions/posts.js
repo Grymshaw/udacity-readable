@@ -2,7 +2,6 @@
 import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 
-
 // *** SETUP ***
 const BASE_URL = 'http://localhost:5001/posts';
 const HEADERS = {
@@ -18,8 +17,7 @@ export const upvotePostRequest = () => ({ type: types.UPVOTE_POST_REQUEST });
 export const downvotePostRequest = () => ({ type: types.DOWNVOTE_POST_REQUEST });
 export const fetchAllPostsRequest = () => ({ type: types.FETCH_ALL_POSTS_REQUEST });
 export const fetchCategoryPostsRequest = () => ({ type: types.FETCH_CATEGORY_POSTS_REQUEST });
-export const fetchPostCommentsRequest = () => ({ type: types.FETCH_POST_COMMENTS_REQUEST });
-
+// export const fetchPostCommentsRequest = () => ({ type: types.FETCH_POST_COMMENTS_REQUEST });
 
 // *** blank_SUCCESS *** //
 export const addPostSuccess = post => ({
@@ -50,16 +48,15 @@ export const fetchAllPostsSuccess = posts => ({
   posts,
 });
 
-export const fetchPostCommentsSuccess = comments => ({
-  type: types.FETCH_POST_COMMENTS_SUCCESS,
-  comments,
-});
+// export const fetchPostCommentsSuccess = comments => ({
+//   type: types.FETCH_POST_COMMENTS_SUCCESS,
+//   comments,
+// });
 
 export const fetchCategoryPostsSuccess = posts => ({
   type: types.FETCH_CATEGORY_POSTS_SUCCESS,
   posts,
 });
-
 
 // *** thunk action creators *** //
 export const addPost = post => (dispatch) => {
@@ -126,15 +123,15 @@ export const fetchAllPosts = () => (dispatch) => {
     .then(json => dispatch(fetchAllPostsSuccess(json)));
 };
 
-export const fetchPostComments = id => (dispatch) => {
-  dispatch(fetchPostCommentsRequest());
-  return fetch(`${BASE_URL}/${id}/comments`, {
-    method: 'get',
-    headers: HEADERS,
-  })
-    .then(res => res.json())
-    .then(json => dispatch(fetchPostCommentsSuccess(json)));
-};
+// export const fetchPostComments = id => (dispatch) => {
+//   dispatch(fetchPostCommentsRequest());
+//   return fetch(`${BASE_URL}/${id}/comments`, {
+//     method: 'get',
+//     headers: HEADERS,
+//   })
+//     .then(res => res.json())
+//     .then(json => dispatch(fetchPostCommentsSuccess(json)));
+// };
 
 export const fetchCategoryPosts = category => (dispatch) => {
   dispatch(fetchCategoryPostsRequest());

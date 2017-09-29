@@ -71,6 +71,13 @@ describe('comments reducer', () => {
         isRequestPending: true,
       });
     });
+    it('should handle FETCH_POST_COMMENTS_REQUEST', () => {
+      const stateBefore = { comments: {}, isRequestPending: false };
+      const action = { type: types.FETCH_POST_COMMENTS_REQUEST };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      expect(comments(stateBefore, action)).to.eql({ comments: {}, isRequestPending: true });
+    });
   });
   describe('comments reducer <blank>_SUCCESSes', () => {
     const currentDate = Date.now();
@@ -94,7 +101,7 @@ describe('comments reducer', () => {
 
       const stateAfter = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -112,7 +119,7 @@ describe('comments reducer', () => {
     it('should handle EDIT_COMMENT_SUCCESS', () => {
       const stateBefore = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -122,7 +129,7 @@ describe('comments reducer', () => {
             parentDeleted: false,
             voteCount: 1,
           },
-          '1': {
+          1: {
             id: '1',
             parentId: '1',
             author: 'not me',
@@ -155,7 +162,7 @@ describe('comments reducer', () => {
 
       const stateAfter = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -165,7 +172,7 @@ describe('comments reducer', () => {
             parentDeleted: false,
             voteCount: 1,
           },
-          '1': {
+          1: {
             id: '1',
             parentId: '1',
             author: 'not me',
@@ -183,7 +190,7 @@ describe('comments reducer', () => {
     it('should handle DELETE_COMMENT_SUCCESS', () => {
       const stateBefore = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -215,7 +222,7 @@ describe('comments reducer', () => {
 
       const stateAfter = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -233,7 +240,7 @@ describe('comments reducer', () => {
     it('should handle UPVOTE_COMMENT_SUCCESS', () => {
       const stateBefore = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -265,7 +272,7 @@ describe('comments reducer', () => {
 
       const stateAfter = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -283,7 +290,7 @@ describe('comments reducer', () => {
     it('should handle DOWNVOTE_COMMENT_SUCCESS', () => {
       const stateBefore = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -315,7 +322,7 @@ describe('comments reducer', () => {
 
       const stateAfter = {
         comments: {
-          '0': {
+          0: {
             id: '0',
             parentId: '1',
             author: 'me',
@@ -329,6 +336,60 @@ describe('comments reducer', () => {
         isRequestPending: false,
       };
       expect(comments(stateBefore, action)).to.deep.equal(stateAfter);
+    });
+    it('should handle FETCH_POST_COMMENTS_SUCCESS', () => {
+      const json = [
+        {
+          author: 'thingtwo',
+          body: 'Hi there! I am a COMMENT.',
+          deleted: false,
+          id: '894tuq4ut84ut8v4t8wun89g',
+          parentDeleted: false,
+          parentId: '8xf0y6ziyjabvozdd253nd',
+          timestamp: 1468166872634,
+          voteScore: 6,
+        },
+        {
+          author: 'thingone',
+          body: 'Comments. Are. Cool.',
+          deleted: false,
+          id: '8tu4bsun805n8un48ve89',
+          parentDeleted: false,
+          parentId: '8xf0y6ziyjabvozdd253nd',
+          timestamp: 1469479767190,
+          voteScore: -5,
+        },
+      ];
+      const stateBefore = { comments: {}, isRequestPending: true };
+      const action = { type: types.FETCH_POST_COMMENTS_SUCCESS, comments: json };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      const stateAfter = {
+        comments: {
+          '894tuq4ut84ut8v4t8wun89g': {
+            author: 'thingtwo',
+            body: 'Hi there! I am a COMMENT.',
+            deleted: false,
+            id: '894tuq4ut84ut8v4t8wun89g',
+            parentDeleted: false,
+            parentId: '8xf0y6ziyjabvozdd253nd',
+            timestamp: 1468166872634,
+            voteScore: 6,
+          },
+          '8tu4bsun805n8un48ve89': {
+            author: 'thingone',
+            body: 'Comments. Are. Cool.',
+            deleted: false,
+            id: '8tu4bsun805n8un48ve89',
+            parentDeleted: false,
+            parentId: '8xf0y6ziyjabvozdd253nd',
+            timestamp: 1469479767190,
+            voteScore: -5,
+          },
+        },
+        isRequestPending: false,
+      };
+      expect(comments(stateBefore, action)).to.eql(stateAfter);
     });
   });
 });

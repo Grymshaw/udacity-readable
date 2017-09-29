@@ -71,6 +71,20 @@ describe('posts reducer', () => {
         isRequestPending: true,
       });
     });
+    it('should handle FETCH_CATEGORY_POSTS_REQUEST', () => {
+      const stateBefore = { posts: {}, isRequestPending: false };
+      const action = { type: types.FETCH_CATEGORY_POSTS_REQUEST };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      expect(posts(stateBefore, action)).to.eql({ posts: {}, isRequestPending: true });
+    });
+    it('should handle FETCH_ALL_POSTS_REQUEST', () => {
+      const stateBefore = { posts: {}, isRequestPending: false };
+      const action = { type: types.FETCH_ALL_POSTS_REQUEST };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      expect(posts(stateBefore, action)).to.eql({ posts: {}, isRequestPending: true });
+    });
   });
   describe('posts reducer <blank>_SUCCESSes', () => {
     const currentDate = Date.now();
@@ -93,7 +107,7 @@ describe('posts reducer', () => {
 
       const stateAfter = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'new post body',
@@ -109,7 +123,7 @@ describe('posts reducer', () => {
     it('should handle EDIT_POST_SUCCESS', () => {
       const stateBefore = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'new post body',
@@ -117,7 +131,7 @@ describe('posts reducer', () => {
             deleted: false,
             voteCount: 1,
           },
-          '1': {
+          1: {
             id: '1',
             author: 'not me',
             body: 'second post body',
@@ -146,7 +160,7 @@ describe('posts reducer', () => {
 
       const stateAfter = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'edited post body',
@@ -154,7 +168,7 @@ describe('posts reducer', () => {
             deleted: false,
             voteCount: 1,
           },
-          '1': {
+          1: {
             id: '1',
             author: 'not me',
             body: 'second post body',
@@ -170,7 +184,7 @@ describe('posts reducer', () => {
     it('should handle DELETE_POST_SUCCESS', () => {
       const stateBefore = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'post body',
@@ -198,7 +212,7 @@ describe('posts reducer', () => {
 
       const stateAfter = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'post body',
@@ -215,7 +229,7 @@ describe('posts reducer', () => {
     it('should handle UPVOTE_POST_SUCCESS', () => {
       const stateBefore = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'post body',
@@ -243,7 +257,7 @@ describe('posts reducer', () => {
 
       const stateAfter = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'post body',
@@ -259,7 +273,7 @@ describe('posts reducer', () => {
     it('should handle DOWNVOTE_POST_SUCCESS', () => {
       const stateBefore = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'post body',
@@ -287,7 +301,7 @@ describe('posts reducer', () => {
 
       const stateAfter = {
         posts: {
-          '0': {
+          0: {
             id: '0',
             author: 'me',
             body: 'post body',
@@ -299,6 +313,68 @@ describe('posts reducer', () => {
         isRequestPending: false,
       };
       expect(posts(stateBefore, action)).to.deep.equal(stateAfter);
+    });
+    it('should handle FETCH_ALL_POSTS_SUCCESS', () => {
+      const stateBefore = { posts: {}, isRequestPending: true };
+      const action = {
+        type: types.FETCH_ALL_POSTS_SUCCESS,
+        posts: [{
+          author: 'thingtwo',
+          body: 'Everyone says so after all.',
+          category: 'react',
+          deleted: false,
+          id: '8xf0y6ziyjabvozdd253nd',
+          timestamp: 1467166872634,
+          title: 'Udacity is the best place to learn React',
+          voteScore: 6,
+        }],
+      };
+      expect(posts(stateBefore, action)).to.eql({
+        posts: {
+          '8xf0y6ziyjabvozdd253nd': {
+            author: 'thingtwo',
+            body: 'Everyone says so after all.',
+            category: 'react',
+            deleted: false,
+            id: '8xf0y6ziyjabvozdd253nd',
+            timestamp: 1467166872634,
+            title: 'Udacity is the best place to learn React',
+            voteScore: 6,
+          },
+        },
+        isRequestPending: false,
+      });
+    });
+    it('should handle FETCH_CATEGORY_POSTS_SUCCESS', () => {
+      const stateBefore = { posts: {}, isRequestPending: true };
+      const action = {
+        type: types.FETCH_CATEGORY_POSTS_SUCCESS,
+        posts: [{
+          author: 'thingtwo',
+          body: 'Everyone says so after all.',
+          category: 'react',
+          deleted: false,
+          id: '8xf0y6ziyjabvozdd253nd',
+          timestamp: 1467166872634,
+          title: 'Udacity is the best place to learn React',
+          voteScore: 6,
+        }],
+      };
+      expect(posts(stateBefore, action)).to.eql({
+        posts: {
+          '8xf0y6ziyjabvozdd253nd': {
+            author: 'thingtwo',
+            body: 'Everyone says so after all.',
+            category: 'react',
+            deleted: false,
+            id: '8xf0y6ziyjabvozdd253nd',
+            timestamp: 1467166872634,
+            title: 'Udacity is the best place to learn React',
+            voteScore: 6,
+          },
+        },
+        isRequestPending: false,
+      });
     });
   });
 });
