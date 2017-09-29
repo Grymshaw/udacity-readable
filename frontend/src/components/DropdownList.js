@@ -16,10 +16,10 @@ class DropdownList extends Component {
         {list && list.length
           ? list.map(item => (
             <option
-              key={item}
-              value={item}
+              key={item.name}
+              value={item.value}
             >
-              {item}
+              {item.name}
             </option>
           ))
           : null}
@@ -29,9 +29,13 @@ class DropdownList extends Component {
 }
 
 DropdownList.propTypes = {
-  fetchData: PropTypes.func.isRequired,
-  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchData: PropTypes.func,
+  list: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
+};
+
+DropdownList.defaultProps = {
+  fetchData: () => {},
 };
 
 export default DropdownList;

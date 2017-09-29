@@ -16,7 +16,7 @@ describe('<DropdownList />', () => {
     fetchData = sinon.spy();
     wrapper = shallow(
       <DropdownList
-        list={['react', 'udacity']}
+        list={[{ name: 'react', value: 'react' }, { name: 'udacity', value: 'udacity' }]}
         onChange={onChange}
         fetchData={fetchData}
       />);

@@ -39,7 +39,11 @@ describe('<CategoryList />', () => {
 
     store = configureMockStore([thunk])({
       categories: {
-        categories: ['react', 'redux', 'udacity'],
+        categories: [
+          { name: 'react', value: 'react' },
+          { name: 'redux', value: 'redux' },
+          { name: 'udacity', value: 'udacity' },
+        ],
         isRequestPending: false,
       },
     });
@@ -48,6 +52,7 @@ describe('<CategoryList />', () => {
   });
 
   afterEach(() => {
+    store.dispatch.restore();
     window.fetch.restore();
   });
 
@@ -63,7 +68,7 @@ describe('<CategoryList />', () => {
     it('receives `list` prop from <CategoryList />', () => {
       expect(wrapper.find('DropdownList').first().props().list).to.eql(
         // CategoryList adds 'View all' to start of dropdown array
-        ['View all', ...store.getState().categories.categories],
+        [{ name: 'View all', value: '/' }, ...store.getState().categories.categories],
       );
     });
 
@@ -71,10 +76,6 @@ describe('<CategoryList />', () => {
       // fetchData called in <DropdownList /> componentWillMount
       expect(store.dispatch.callCount).to.be.above(0);
       expect(store.getActions()).to.deep.contain({ type: types.FETCH_CATEGORIES_REQUEST });
-      // expect(store.getActions()).to.deep.contain({
-      //   type: types.FETCH_CATEGORIES_SUCCESS,
-      //   categories: ['react', 'redux', 'udacity'],
-      // });
     });
 
     it('receives `onChange` prop from <CategoryList />', () => {
