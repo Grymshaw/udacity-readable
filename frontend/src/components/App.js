@@ -5,6 +5,7 @@ import './App.css';
 import AddPostButton from './AddPostButton';
 import CategoryList from './CategoryList';
 import PrimaryNav from './PrimaryNav';
+import SortOrderList from './SortOrderList';
 import Subnav from './Subnav';
 
 const comments = [
@@ -48,17 +49,7 @@ const posts = [
 
 const App = () => (
   <div>
-    <PrimaryNav>
-      <h3>Readable</h3>
-    </PrimaryNav>
-    <Subnav>
-      <AddPostButton>Add post +</AddPostButton>
-      <div>
-        <CategoryList />
-      </div>
-    </Subnav>
-
-    <div className="container">
+    <div>
       <div className="page">
         {/* navbar */}
         <div className="navbar">
