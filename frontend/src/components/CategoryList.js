@@ -12,7 +12,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  list: state.categories.categories,
+  // categories nested in state b/c of combineReducers()
+  list: ['View all', ...(state.categories.categories)],
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownList);

@@ -3,7 +3,6 @@
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 import thunk from 'redux-thunk';
@@ -11,6 +10,7 @@ import thunk from 'redux-thunk';
 import * as types from '../constants/ActionTypes';
 import CategoryList from './CategoryList';
 
+// same as expected shape returned by /categories API endpoint
 const categoriesResponse = {
   categories: [
     { name: 'react', path: 'react' },
@@ -39,16 +39,12 @@ describe('<CategoryList />', () => {
 
     store = configureMockStore([thunk])({
       categories: {
-        list: ['react', 'redux', 'udacity'],
+        categories: ['react', 'redux', 'udacity'],
         isRequestPending: false,
       },
     });
     sinon.spy(store, 'dispatch');
-    wrapper = mount(
-      // <Provider store={store}>
-        <CategoryList store={store} />
-      // </Provider>);
-      );
+    wrapper = mount(<CategoryList store={store} />);
   });
 
   afterEach(() => {
@@ -64,9 +60,12 @@ describe('<CategoryList />', () => {
   });
 
   describe('rendered <DropdownList />', () => {
-    // it('receives `list` prop from <CategoryList />', () => {
-    //   expect(wrapper.find(<DropdownList />).first().props().list).to.eql(store.getState().list);
-    // });
+    it('receives `list` prop from <CategoryList />', () => {
+      expect(wrapper.find('DropdownList').first().props().list).to.eql(
+        // CategoryList adds 'View all' to start of dropdown array
+        ['View all', ...store.getState().categories.categories],
+      );
+    });
 
     it('receives `fetchData` as prop from <CategoryList />', () => {
       // fetchData called in <DropdownList /> componentWillMount
@@ -85,8 +84,6 @@ describe('<CategoryList />', () => {
         type: '@@router/CALL_HISTORY_METHOD',
         payload: { method: 'push', args: ['/react'] },
       }));
-      // expect(store.dispatch.calledWith({ type: types.CHANGE_CATEGORY, category: 'react' })).to.equal(true);
-      // expect(store.getActions()).to.deep.contain({ type: types.CHANGE_CATEGORY, category: 'react' });
     });
   });
 });
