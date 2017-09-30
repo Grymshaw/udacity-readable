@@ -3,38 +3,44 @@ import React from 'react';
 
 import Post from './Post';
 
-const PostList = ({ posts }) => (
-  <div className="container">
-    {posts.map(post => (
-      <Post
-        key={post.id}
-        post={post}
-      />
-    ))}
-  </div>
-);
+class PostList extends React.Component {
+  componentDidMount() {
+    this.props.onMount();
+  }
+  render() {
+    const { posts } = this.props;
+    return posts
+      ? <div className="container">
+        {posts.map(post => (
+          <Post
+            key={post.id}
+            post={post}
+          />
+        ))}
+      </div>
+      : null;
+  }
+}
+
+// const PostList = ({ posts }) => (
+//   <div className="container">
+//     {posts.map(post => (
+//       <Post
+//         key={post.id}
+//         post={post}
+//       />
+//     ))}
+//   </div>
+// );
 
 PostList.defaultProps = {
+  onMount: () => {},
   posts: [],
 };
 
 PostList.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onMount: PropTypes.func,
+  posts: PropTypes.arrayOf(PropTypes.object),
 };
-
-// const getArrayFromStateProperty = (state, proerty) => (
-//   Object.keys(state[property]).map(key => (
-//     state[property][key]
-//   ))
-// );
-
-// const mapStateToProps = state => ({
-//   posts: getArrayFromStateProperty(state, 'posts'),
-// });
-// const mapDispatchToProps = dispatch => ({
-//   onChange: category => dispatch(actions.changeCategory(category)),
-// });
-
-// const PostList = connect(mapStateToProps, mapDispatchToProps)(DropdownList);
 
 export default PostList;
