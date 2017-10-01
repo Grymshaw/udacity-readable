@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import AddPostButton from './components/AddPostButton';
@@ -24,7 +25,7 @@ ReactDOM.render(
       <div>
         {/* navigation displayed on all routes */}
         <PrimaryNav>
-          <h3>Readable</h3>
+          <h3><Link to="/">Readable</Link></h3>
         </PrimaryNav>
         <Subnav>
           <AddPostButton>Add post +</AddPostButton>
@@ -33,6 +34,7 @@ ReactDOM.render(
             <CategoryList />
           </div>
         </Subnav>
+        {/* routes */}
         <Route exact path="/" component={App} />
         <Route path="/new" render={() => <h1>testing</h1>} />
       </div>
