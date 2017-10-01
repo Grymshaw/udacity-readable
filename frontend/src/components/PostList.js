@@ -8,12 +8,13 @@ class PostList extends React.Component {
     this.props.onMount();
   }
   render() {
-    const { posts } = this.props;
+    const { onPostClick, posts } = this.props;
     return posts
       ? <div className="container">
         {posts.map(post => (
           <Post
             key={post.id}
+            onPostClick={onPostClick}
             post={post}
           />
         ))}
@@ -22,24 +23,15 @@ class PostList extends React.Component {
   }
 }
 
-// const PostList = ({ posts }) => (
-//   <div className="container">
-//     {posts.map(post => (
-//       <Post
-//         key={post.id}
-//         post={post}
-//       />
-//     ))}
-//   </div>
-// );
-
 PostList.defaultProps = {
   onMount: () => {},
+  onPostClick: () => {},
   posts: [],
 };
 
 PostList.propTypes = {
   onMount: PropTypes.func,
+  onPostClick: PropTypes.func,
   posts: PropTypes.arrayOf(PropTypes.object),
 };
 

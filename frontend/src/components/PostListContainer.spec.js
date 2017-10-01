@@ -100,5 +100,16 @@ describe('<PostListContainer />', () => {
       expect(store.dispatch.callCount).to.be.above(0);
       expect(store.dispatch.calledWith({ type: types.FETCH_ALL_POSTS_REQUEST })).to.equal(true);
     });
+
+    it('receives `onPostClick` in props', () => {
+      postList.first().props().onPostClick('0');
+      const expectedActions = [
+        { type: '@@router/CALL_HISTORY_METHOD', payload: { method: 'push', args: ['/posts/0'] } },
+        { type: types.SET_CURRENT_POST, postId: '0' },
+      ];
+      console.log(store.getActions());
+      expect(store.getActions()).to.deep.include(expectedActions[0]);
+      expect(store.getActions()).to.deep.include(expectedActions[1]);
+    });
   });
 });

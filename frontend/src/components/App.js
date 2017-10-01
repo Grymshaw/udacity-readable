@@ -84,7 +84,7 @@ const App = () => (
             <input name="author" type="text" />
           </label>
           <label htmlFor="comment">
-            Your name
+            Comment
             <textarea name="comment" />
           </label>
         </div>

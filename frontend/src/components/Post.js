@@ -3,9 +3,14 @@ import React from 'react';
 
 import PostVotingContainer from './PostVotingContainer';
 
-const Post = ({ post }) => (
+const Post = ({ onPostClick, post }) => (
   <div className="container">
-    <div className="post-title">
+    <div
+      className="post-title"
+      onClick={() => onPostClick(post.id)}
+      role="link"
+      tabIndex={0}
+    >
       {post.title}
     </div>
     <div className="post-footer">
@@ -18,6 +23,7 @@ const Post = ({ post }) => (
 );
 
 Post.propTypes = {
+  onPostClick: PropTypes.func,
   post: PropTypes.shape({
     id: PropTypes.string,
     author: PropTypes.string,
@@ -27,6 +33,10 @@ Post.propTypes = {
     timestamp: PropTypes.number,
     voteScore: PropTypes.nubmer,
   }).isRequired,
+};
+
+Post.defaultProps = {
+  onPostClick: () => {},
 };
 
 export default Post;

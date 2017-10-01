@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import sinon from 'sinon';
 
 import Post from './Post';
 import PostVotingContainer from './PostVotingContainer';
@@ -20,13 +21,18 @@ const post = {
 };
 
 describe('<Post />', () => {
+  let onPostClick;
   let store;
   let wrapper;
   beforeEach(() => {
+    onPostClick = sinon.spy();
     store = configureMockStore()({});
     wrapper = mount(
       <Provider store={store}>
-        <Post post={post} />
+        <Post
+          post={post}
+          onPostClick={onPostClick}
+        />
       </Provider>)
       .find(Post)
       .first();
@@ -53,6 +59,11 @@ describe('<Post />', () => {
 
     it('.post-title should contain title of post', () => {
       expect(postTitleWrapper.text()).to.equal(post.title);
+    });
+
+    it('calls `onPostClick` when is clicked', () => {
+      postTitleWrapper.simulate('click');
+      expect(onPostClick.calledOnce).to.equal(true);
     });
   });
 
