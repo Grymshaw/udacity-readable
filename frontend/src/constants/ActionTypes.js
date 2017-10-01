@@ -39,6 +39,9 @@ export const FETCH_POST_COMMENTS_SUCCESS = 'FETCH_POST_COMMENTS_SUCCESS';
 // sort order
 export const SET_SORT_ORDER = 'SET_SORT_ORDER';
 
+// current post
+export const SET_CURRENT_POST = 'SET_CURRENT_POST';
+
 // // posts
 // export const ADD_POST = 'ADD_POST';
 // export const EDIT_POST = 'EDIT_POST';

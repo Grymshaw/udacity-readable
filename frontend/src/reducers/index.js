@@ -1,6 +1,6 @@
 import categories from './categories';
 import comments from './comments';
-// import navigation from './';
+import currentPost from './currentPost';
 import posts from './posts';
 
-export default { categories, comments, posts };
+export default { categories, comments, currentPost, posts };
