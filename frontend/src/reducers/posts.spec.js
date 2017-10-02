@@ -7,89 +7,116 @@ import posts from './posts';
 
 describe('posts reducer', () => {
   it('should handle default state', () => {
-    const initialState = { posts: {}, isRequestPending: false };
+    const initialState = { currentPost: {}, posts: {}, isRequestPending: false };
     expect(posts(undefined, {})).to.deep.equal(initialState);
   });
+
+  it('should handle SET_CURRENT_POST', () => {
+    const stateBefore = { currentPost: undefined, posts: {}, isRequestPending: false };
+    const action = { type: types.SET_CURRENT_POST, id: '0' };
+    expect(posts(stateBefore, action)).to.eql(
+      { currentPost: '0', posts: {}, isRequestPending: false }
+    );
+  });
+
   describe('posts reducer <blank>_REQUESTs', () => {
     it('should handle ADD_POST_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.ADD_POST_REQUEST };
 
       deepFreeze(stateBefore);
       deepFreeze(action);
 
       expect(posts(stateBefore, action)).to.deep.equal({
+        currentPost: {},
         posts: {},
         isRequestPending: true,
       });
     });
     it('should handle EDIT_POST_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.EDIT_POST_REQUEST };
 
       deepFreeze(stateBefore);
       deepFreeze(action);
 
       expect(posts(stateBefore, action)).to.deep.equal({
+        currentPost: {},
         posts: {},
         isRequestPending: true,
       });
     });
     it('should handle DELETE_POST_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.DELETE_POST_REQUEST };
 
       deepFreeze(stateBefore);
       deepFreeze(action);
 
       expect(posts(stateBefore, action)).to.deep.equal({
+        currentPost: {},
         posts: {},
         isRequestPending: true,
       });
     });
     it('should handle UPVOTE_POST_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.UPVOTE_POST_REQUEST };
 
       deepFreeze(stateBefore);
       deepFreeze(action);
 
       expect(posts(stateBefore, action)).to.deep.equal({
+        currentPost: {},
         posts: {},
         isRequestPending: true,
       });
     });
     it('should handle DOWNVOTE_POST_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.DOWNVOTE_POST_REQUEST };
 
       deepFreeze(stateBefore);
       deepFreeze(action);
 
       expect(posts(stateBefore, action)).to.deep.equal({
+        currentPost: {},
         posts: {},
         isRequestPending: true,
       });
     });
     it('should handle FETCH_CATEGORY_POSTS_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.FETCH_CATEGORY_POSTS_REQUEST };
       deepFreeze(stateBefore);
       deepFreeze(action);
-      expect(posts(stateBefore, action)).to.eql({ posts: {}, isRequestPending: true });
+      expect(posts(stateBefore, action)).to.eql(
+        { currentPost: {}, posts: {}, isRequestPending: true },
+      );
     });
     it('should handle FETCH_ALL_POSTS_REQUEST', () => {
-      const stateBefore = { posts: {}, isRequestPending: false };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: false };
       const action = { type: types.FETCH_ALL_POSTS_REQUEST };
       deepFreeze(stateBefore);
       deepFreeze(action);
-      expect(posts(stateBefore, action)).to.eql({ posts: {}, isRequestPending: true });
+      expect(posts(stateBefore, action)).to.eql(
+        { currentPost: {}, posts: {}, isRequestPending: true },
+      );
+    });
+    it('should handle FETCH_POST_REQUEST', () => {
+      const stateBefore = { currentPost: {}, isRequestPending: false };
+      const action = { type: types.FETCH_POST_REQUEST };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      const stateAfter = { currentPost: {}, isRequestPending: true };
+      expect(posts(stateBefore, action)).to.eql(stateAfter);
     });
   });
+
   describe('posts reducer <blank>_SUCCESSes', () => {
     const currentDate = Date.now();
     it('should handle ADD_POST_SUCCESS', () => {
-      const stateBefore = { posts: {}, isRequestPending: true };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: true };
       const action = {
         type: types.ADD_POST_SUCCESS,
         post: {
@@ -106,6 +133,7 @@ describe('posts reducer', () => {
       deepFreeze(action);
 
       const stateAfter = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -122,6 +150,7 @@ describe('posts reducer', () => {
     });
     it('should handle EDIT_POST_SUCCESS', () => {
       const stateBefore = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -159,6 +188,7 @@ describe('posts reducer', () => {
       deepFreeze(action);
 
       const stateAfter = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -183,6 +213,7 @@ describe('posts reducer', () => {
     });
     it('should handle DELETE_POST_SUCCESS', () => {
       const stateBefore = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -211,6 +242,7 @@ describe('posts reducer', () => {
       deepFreeze(action);
 
       const stateAfter = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -228,6 +260,7 @@ describe('posts reducer', () => {
     });
     it('should handle UPVOTE_POST_SUCCESS', () => {
       const stateBefore = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -256,6 +289,7 @@ describe('posts reducer', () => {
       deepFreeze(action);
 
       const stateAfter = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -272,6 +306,7 @@ describe('posts reducer', () => {
     });
     it('should handle DOWNVOTE_POST_SUCCESS', () => {
       const stateBefore = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -300,6 +335,7 @@ describe('posts reducer', () => {
       deepFreeze(action);
 
       const stateAfter = {
+        currentPost: {},
         posts: {
           0: {
             id: '0',
@@ -315,7 +351,7 @@ describe('posts reducer', () => {
       expect(posts(stateBefore, action)).to.deep.equal(stateAfter);
     });
     it('should handle FETCH_ALL_POSTS_SUCCESS', () => {
-      const stateBefore = { posts: {}, isRequestPending: true };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: true };
       const action = {
         type: types.FETCH_ALL_POSTS_SUCCESS,
         posts: [{
@@ -330,6 +366,7 @@ describe('posts reducer', () => {
         }],
       };
       expect(posts(stateBefore, action)).to.eql({
+        currentPost: {},
         posts: {
           '8xf0y6ziyjabvozdd253nd': {
             author: 'thingtwo',
@@ -346,7 +383,7 @@ describe('posts reducer', () => {
       });
     });
     it('should handle FETCH_CATEGORY_POSTS_SUCCESS', () => {
-      const stateBefore = { posts: {}, isRequestPending: true };
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: true };
       const action = {
         type: types.FETCH_CATEGORY_POSTS_SUCCESS,
         posts: [{
@@ -361,6 +398,7 @@ describe('posts reducer', () => {
         }],
       };
       expect(posts(stateBefore, action)).to.eql({
+        currentPost: {},
         posts: {
           '8xf0y6ziyjabvozdd253nd': {
             author: 'thingtwo',
@@ -375,6 +413,14 @@ describe('posts reducer', () => {
         },
         isRequestPending: false,
       });
+    });
+    it('should handle FETCH_POST_SUCCESS', () => {
+      const stateBefore = { currentPost: {}, posts: {}, isRequestPending: true };
+      const action = { type: types.FETCH_POST_SUCCESS, post: { id: '0', body: 'asdf' } };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      const stateAfter = { currentPost: { id: '0', body: 'asdf' }, posts: {}, isRequestPending: false };
+      expect(posts(stateBefore, action)).to.eql(stateAfter);
     });
   });
 });

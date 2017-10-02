@@ -1,3 +1,5 @@
+/* eslint "no-undef": 0 */
+/* eslint "react/jsx-filename-extension": 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,6 +10,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import AddPostButton from './components/AddPostButton';
 import App from './components/App';
 import CategoryList from './components/CategoryList';
+import PostDetailsView from './components/PostDetailsView';
 import PrimaryNav from './components/PrimaryNav';
 import SortOrderList from './components/SortOrderList';
 import Subnav from './components/Subnav';
@@ -16,8 +19,6 @@ import { history, store } from './store';
 
 import './index.css';
 import '../node_modules/normalize.css/normalize.css';
-
-console.log(store.getState());
 
 ReactDOM.render(
   <Provider store={store}>
@@ -36,7 +37,8 @@ ReactDOM.render(
         </Subnav>
         {/* routes */}
         <Route exact path="/" component={App} />
-        <Route path="/new" render={() => <h1>testing</h1>} />
+        <Route path="/posts/:id" component={PostDetailsView} />
+        <Route path="/new" render={() => <h1>add a new post</h1>} />
       </div>
     </ConnectedRouter>
   </Provider>,

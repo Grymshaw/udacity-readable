@@ -6,6 +6,7 @@ import * as currentPostActions from '../actions/currentPost';
 import PostList from './PostList';
 
 const mapStateToProps = state => ({
+  // get posts array from posts object in state
   posts: Object.keys(state.posts.posts).map(key => state.posts.posts[key]),
 });
 

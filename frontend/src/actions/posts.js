@@ -17,7 +17,8 @@ export const upvotePostRequest = () => ({ type: types.UPVOTE_POST_REQUEST });
 export const downvotePostRequest = () => ({ type: types.DOWNVOTE_POST_REQUEST });
 export const fetchAllPostsRequest = () => ({ type: types.FETCH_ALL_POSTS_REQUEST });
 export const fetchCategoryPostsRequest = () => ({ type: types.FETCH_CATEGORY_POSTS_REQUEST });
-// export const fetchPostCommentsRequest = () => ({ type: types.FETCH_POST_COMMENTS_REQUEST });
+export const fetchPostRequest = () => ({ type: types.FETCH_POST_REQUEST });
+export const setCurrentPost = id => ({ type: types.SET_CURRENT_POST, id });
 
 // *** blank_SUCCESS *** //
 export const addPostSuccess = post => ({
@@ -48,10 +49,10 @@ export const fetchAllPostsSuccess = posts => ({
   posts,
 });
 
-// export const fetchPostCommentsSuccess = comments => ({
-//   type: types.FETCH_POST_COMMENTS_SUCCESS,
-//   comments,
-// });
+export const fetchPostSuccess = post => ({
+  type: types.FETCH_POST_SUCCESS,
+  post,
+});
 
 export const fetchCategoryPostsSuccess = posts => ({
   type: types.FETCH_CATEGORY_POSTS_SUCCESS,
@@ -123,16 +124,6 @@ export const fetchAllPosts = () => (dispatch) => {
     .then(json => dispatch(fetchAllPostsSuccess(json)));
 };
 
-// export const fetchPostComments = id => (dispatch) => {
-//   dispatch(fetchPostCommentsRequest());
-//   return fetch(`${BASE_URL}/${id}/comments`, {
-//     method: 'get',
-//     headers: HEADERS,
-//   })
-//     .then(res => res.json())
-//     .then(json => dispatch(fetchPostCommentsSuccess(json)));
-// };
-
 export const fetchCategoryPosts = category => (dispatch) => {
   dispatch(fetchCategoryPostsRequest());
   return fetch(`http://localhost:5001/${category}/posts`, {
@@ -141,4 +132,13 @@ export const fetchCategoryPosts = category => (dispatch) => {
   })
     .then(res => res.json())
     .then(json => dispatch(fetchCategoryPostsSuccess(json)));
+};
+
+export const fetchPost = id => (dispatch) => {
+  dispatch(fetchPostRequest());
+  return fetch(`${BASE_URL}/${id}`, {
+    method: 'get',
+    headers: HEADERS,
+  }).then(res => res.json())
+    .then(json => dispatch(fetchPostSuccess(json)));
 };

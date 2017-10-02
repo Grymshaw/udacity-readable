@@ -1,5 +1,5 @@
-import * as actions from '../actions/currentPost';
-import * as types from '../constants/ActionTypes';
+// import * as actions from '../actions/currentPost';
+// import * as types from '../constants/ActionTypes';
 
 const defaultState = {
   currentPost: undefined,

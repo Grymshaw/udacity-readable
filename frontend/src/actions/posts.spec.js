@@ -1,5 +1,4 @@
 /* eslint "no-undef": 0 */
-
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -102,6 +101,16 @@ describe('post actions', () => {
       post,
     });
   });
+  it('fetchPostRequest creates FETCH_POST_REQUEST action', () => {
+    expect(actions.fetchPostRequest()).to.eql({ type: types.FETCH_POST_REQUEST });
+  });
+  it('fetchPostSuccess creates FETCH_POST_SUCCESS action', () => {
+    const post = { id: '0', body: 'blah' };
+    expect(actions.fetchPostSuccess(post)).to.eql({ type: types.FETCH_POST_SUCCESS, post });
+  });
+  it('setCurrentPost creates SET_CURRENT_POST action', () => {
+    expect(actions.setCurrentPost('0')).to.eql({ type: types.SET_CURRENT_POST, id: '0' });
+  });
 });
 
 describe('async post actions', () => {
@@ -122,9 +131,11 @@ describe('async post actions', () => {
       })
     );
   });
+
   afterEach(() => {
     window.fetch.mockRestore();
   });
+
   it('creates ADD_POST_SUCCESS when done adding post', () => {
     const currentDate = Date.now();
     const post = {
@@ -150,6 +161,7 @@ describe('async post actions', () => {
         expect(storeActions).to.deep.equal(expectedActions);
       });
   });
+
   it('creates EDIT_POST_SUCCESS when done editing post', () => {
     const currentDate = Date.now();
     const edits = {
@@ -180,6 +192,7 @@ describe('async post actions', () => {
         expect(storeActions).to.deep.equal(expectedActions);
       });
   });
+
   it('creates DELETE_POST_SUCCESS when done deleting post', () => {
     window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify({ post: 'a post' }))));
     const store = mockStore({});
@@ -193,6 +206,7 @@ describe('async post actions', () => {
       expect(storeActions).to.deep.equal(expectedActions);
     });
   });
+
   it('creates UPVOTE_POST_SUCCESS when done upvoting post', () => {
     window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify({ post: 'a post' }))));
     const store = mockStore({});
@@ -206,6 +220,7 @@ describe('async post actions', () => {
       expect(storeActions).to.deep.equal(expectedActions);
     });
   });
+
   it('creates DOWNVOTE_POST_SUCCESS when done downvoting post', () => {
     window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify({ post: 'a post' }))));
     const store = mockStore({});
@@ -234,21 +249,6 @@ describe('async post actions', () => {
     });
   });
 
-  // it('creates FETCH_POST_COMMENTS_SUCCESS when done getting all posts', () => {
-  //   window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['comment 2', 'comment 4']))));
-  //   const store = mockStore({});
-  //   const expectedActions = [
-  //     { type: types.FETCH_POST_COMMENTS_REQUEST },
-  //     { type: types.FETCH_POST_COMMENTS_SUCCESS, comments: ['comment 2', 'comment 4'] },
-  //   ];
-  //   const postId = '2';
-  //   return store.dispatch(actions.fetchPostComments(postId)).then(() => {
-  //     const storeActions = store.getActions();
-  //     expect(storeActions.length).to.equal(2);
-  //     expect(storeActions).to.deep.equal(expectedActions);
-  //   });
-  // });
-
   it('creates FETCH_CATEGORY_POSTS_SUCCESS when done getting all posts', () => {
     window.fetch = jest.fn(() => Promise.resolve(mockResponse(200, null, JSON.stringify(['post 2', 'post 4']))));
     const store = mockStore({});
@@ -261,5 +261,21 @@ describe('async post actions', () => {
       expect(storeActions.length).to.equal(2);
       expect(storeActions).to.deep.equal(expectedActions);
     });
+  });
+
+  it('creates FETCH_POST_SUCCESS when done getting current post', () => {
+    window.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(200, null, JSON.stringify({ id: '0', body: 'blah' }))),
+    );
+    const store = mockStore({});
+    const expectedActions = [
+      { type: types.FETCH_POST_REQUEST },
+      { type: types.FETCH_POST_SUCCESS, post: { id: '0', body: 'blah' } },
+    ];
+    store.dispatch(actions.fetchPost('0'))
+      .then(() => {
+        expect(store.getActions().length).to.equal(2);
+        expect(store.getActions()).to.eql(expectedActions);
+      });
   });
 });

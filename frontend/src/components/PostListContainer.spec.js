@@ -107,7 +107,6 @@ describe('<PostListContainer />', () => {
         { type: '@@router/CALL_HISTORY_METHOD', payload: { method: 'push', args: ['/posts/0'] } },
         { type: types.SET_CURRENT_POST, postId: '0' },
       ];
-      console.log(store.getActions());
       expect(store.getActions()).to.deep.include(expectedActions[0]);
       expect(store.getActions()).to.deep.include(expectedActions[1]);
     });

@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 
 const initialState = {
+  currentPost: {},
   posts: {},
   isRequestPending: false,
 };
@@ -17,6 +18,7 @@ const posts = (state = initialState, action) => {
     case types.DOWNVOTE_POST_REQUEST:
     case types.FETCH_ALL_POSTS_REQUEST:
     case types.FETCH_CATEGORY_POSTS_REQUEST:
+    case types.FETCH_POST_REQUEST:
       return { ...state, isRequestPending: true };
     case types.ADD_POST_SUCCESS:
     case types.EDIT_POST_SUCCESS:
@@ -25,14 +27,18 @@ const posts = (state = initialState, action) => {
     case types.DOWNVOTE_POST_SUCCESS:
       post[action.post.id] = { ...action.post };
       newPosts = Object.assign({}, state.posts, post);
-      return { posts: newPosts, isRequestPending: false };
+      return { ...state, posts: newPosts, isRequestPending: false };
     case types.FETCH_ALL_POSTS_SUCCESS:
     case types.FETCH_CATEGORY_POSTS_SUCCESS:
-      const posts = action.posts.reduce((acc, cur) => {
+      newPosts = action.posts.reduce((acc, cur) => {
         acc[cur.id] = cur;
         return acc;
       }, {});
-      return { posts, isRequestPending: false };
+      return { ...state, posts: newPosts, isRequestPending: false };
+    case types.FETCH_POST_SUCCESS:
+      return { ...state, currentPost: action.post, isRequestPending: false };
+    case types.SET_CURRENT_POST:
+      return { ...state, currentPost: action.id };
     default:
       return state;
   }
