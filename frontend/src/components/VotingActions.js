@@ -3,17 +3,17 @@ import React from 'react';
 
 import Button from './Button';
 
-const VotingActions = ({ onDownvote, onUpvote, postId }) => (
+const VotingActions = ({ onDownvote, onUpvote, id }) => (
   <div className="voting-actions">
-    <Button onClick={() => onUpvote(postId)}>Upvote</Button>
-    <Button onClick={() => onDownvote(postId)}>Downvote</Button>
+    <Button onClick={() => onUpvote(id)}>Upvote</Button>
+    <Button onClick={() => onDownvote(id)}>Downvote</Button>
   </div>
 );
 
 VotingActions.propTypes = {
   onDownvote: PropTypes.func.isRequired,
   onUpvote: PropTypes.func.isRequired,
-  postId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default VotingActions;

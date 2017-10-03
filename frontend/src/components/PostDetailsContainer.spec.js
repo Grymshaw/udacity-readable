@@ -79,7 +79,6 @@ describe('<PostDetailsContainer />', () => {
         { type: types.FETCH_ALL_POSTS_SUCCESS, posts },
         // { type: types.SET_CURRENT_POST, id: '0' },
       ];
-      console.log(store.getActions);
       expect(store.getActions()).to.eql(expectedActions);
       // expect(store.dispatch.callCount).to.equal(expectedActions.length);
       // expect(store.dispatch.calledWith(expectedActions[0])).to.equal(true);

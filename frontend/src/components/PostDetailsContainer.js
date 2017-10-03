@@ -9,7 +9,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }),
 });
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   post: state.posts.posts[state.posts.currentPost],
 });
 

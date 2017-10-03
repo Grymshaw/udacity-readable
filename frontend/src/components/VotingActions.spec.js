@@ -11,7 +11,7 @@ describe('<VotingActions />', () => {
     wrapper = shallow(<VotingActions
       onDownvote={() => {}}
       onUpvote={() => {}}
-      postId={'0'}
+      id={'0'}
     />);
   });
 

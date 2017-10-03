@@ -2,11 +2,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import CommentListContainer from './CommentListContainer';
 import PostDetailsContainer from './PostDetailsContainer';
 
 const PostDetailsView = ({ match }) => (
   <div>
     <PostDetailsContainer id={match.params.id} />
+    <CommentListContainer parentId={match.params.id} />
   </div>
 );
 
