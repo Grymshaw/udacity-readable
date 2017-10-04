@@ -4,7 +4,7 @@ import React from 'react';
 import PostVotingContainer from './PostVotingContainer';
 
 const Post = ({ onPostClick, post }) => (
-  <div className="container">
+  <div style={{ width: '100%' }}>
     <div
       className="post-title"
       onClick={() => onPostClick(post.id)}

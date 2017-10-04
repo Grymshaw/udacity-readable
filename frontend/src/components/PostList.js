@@ -1,3 +1,4 @@
+/* eslint "react/jsx-filename-extension": 0 */
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -7,10 +8,11 @@ class PostList extends React.Component {
   componentDidMount() {
     this.props.onMount();
   }
+
   render() {
     const { onPostClick, posts } = this.props;
     return posts
-      ? <div className="container">
+      ? <div style={{ width: '90%', margin: '0 auto' }}>
         {posts.map(post => (
           <Post
             key={post.id}

@@ -37,7 +37,7 @@ describe('<PostList />', () => {
   });
 
   it('renders a wrapping div', () => {
-    expect(wrapper.find('.container').length).to.equal(1);
+    expect(wrapper.find('div').length).to.equal(1);
   });
 
   it('renders a <Post /> for each post in `posts` prop', () => {

@@ -12,7 +12,7 @@ class PostDetails extends Component {
     const { post } = this.props;
     return (
       post
-        ? <div className="container">
+        ? <div>
           <div className="post-title">{post.title}</div>
           <div className="post-subtitle">
             {post.voteScore} points by {post.author}

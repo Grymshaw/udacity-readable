@@ -1,4 +1,5 @@
 /* eslint "no-undef": 0 */
+/* eslint "react/jsx-filename-extension": 0 */
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import React from 'react';
@@ -55,7 +56,7 @@ describe('<PostListContainer />', () => {
         isRequestPending: false,
       },
     });
-    sinon.spy(store, 'dispatch');
+    // sinon.spy(store, 'dispatch');
     wrapper = mount(
       <Provider store={store}>
         <PostListContainer />
@@ -65,7 +66,6 @@ describe('<PostListContainer />', () => {
 
   afterEach(() => {
     window.fetch.restore();
-    store.dispatch.restore();
   });
 
   it('renders successfully', () => {
@@ -83,22 +83,56 @@ describe('<PostListContainer />', () => {
     });
 
     it('receives `posts` in props', () => {
-      expect(postList.first().props().posts).to.eql([{
-        author: 'thingtwo',
-        body: 'Everyone says so after all.',
-        category: 'react',
-        deleted: false,
-        id: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1467166872634,
-        title: 'Udacity is the best place to learn React',
-        voteScore: 6,
-      }]);
+      expect(postList.first().props().posts).to.eql(postsResponse);
     });
 
     it('receives `onMount` in props', () => {
       // onMount called when <PostList /> mounts
-      expect(store.dispatch.callCount).to.be.above(0);
-      expect(store.dispatch.calledWith({ type: types.FETCH_ALL_POSTS_REQUEST })).to.equal(true);
+      expect(store.getActions()).to.deep.include({ type: types.FETCH_ALL_POSTS_REQUEST });
+    });
+
+    it('when passed `category` prop calls fetchCategory action creator', () => {
+      // have to re-initialize response/fetch b/c component mounts twice
+      const res = new window.Response(
+        JSON.stringify(postsResponse),
+        {
+          status: 200,
+          headers: {
+            Authorization: 'whatever',
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      window.fetch.returns(Promise.resolve(res));
+      // also must re-initialize store
+      store = configureMockStore()({
+        posts: {
+          posts: {
+            '8xf0y6ziyjabvozdd253nd': {
+              author: 'thingtwo',
+              body: 'Everyone says so after all.',
+              category: 'react',
+              deleted: false,
+              id: '8xf0y6ziyjabvozdd253nd',
+              timestamp: 1467166872634,
+              title: 'Udacity is the best place to learn React',
+              voteScore: 6,
+            },
+          },
+          isRequestPending: false,
+        },
+      });
+      wrapper = mount(
+        <Provider store={store}>
+          <PostListContainer category={'react'} />
+        </Provider>,
+      );
+      // TODO: still can't find a way to check _SUCCESS without tests crashing
+      const expectedActions = [
+        { type: types.FETCH_CATEGORY_POSTS_REQUEST },
+        // { type: types.FETCH_CATEGORY_POSTS_SUCCESS, postsResponse },
+      ];
+      expect(store.getActions()).to.eql(expectedActions);
     });
 
     it('receives `onPostClick` in props', () => {

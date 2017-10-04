@@ -1,7 +1,7 @@
 /* eslint "no-undef": 0 */
 /* eslint "react/jsx-filename-extension": 0 */
 import { expect } from 'chai';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
@@ -31,7 +31,7 @@ describe('<CategoryList />', () => {
         status: 200,
         headers: {
           Authorization: 'whatever',
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
       },
     );
@@ -47,12 +47,10 @@ describe('<CategoryList />', () => {
         isRequestPending: false,
       },
     });
-    sinon.spy(store, 'dispatch');
     wrapper = mount(<CategoryList store={store} />);
   });
 
   afterEach(() => {
-    store.dispatch.restore();
     window.fetch.restore();
   });
 
@@ -74,17 +72,63 @@ describe('<CategoryList />', () => {
 
     it('receives `fetchData` as prop from <CategoryList />', () => {
       // fetchData called in <DropdownList /> componentWillMount
-      expect(store.dispatch.callCount).to.be.above(0);
-      expect(store.getActions()).to.deep.contain({ type: types.FETCH_CATEGORIES_REQUEST });
+      expect(store.getActions()).to.eql([{ type: types.FETCH_CATEGORIES_REQUEST }]);
     });
 
-    it('receives `onChange` prop from <CategoryList />', () => {
-      wrapper.find('DropdownList').first().props().onChange('react');
-      expect(store.dispatch.callCount).to.be.above(0);
-      expect(store.dispatch.calledWith({
-        type: '@@router/CALL_HISTORY_METHOD',
-        payload: { method: 'push', args: ['/react'] },
-      }));
+    describe('received `onChange` prop from <CategoryList />', () => {
+      beforeEach(() => {
+        // must re-initialize store and fetch response to test dispatch
+        // from `onChange` prop
+        window.fetch.restore();
+        sinon.stub(window, 'fetch');
+        const res = new window.Response(
+          JSON.stringify(categoriesResponse),
+          {
+            status: 200,
+            headers: {
+              Authorization: 'whatever',
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        window.fetch.returns(Promise.resolve(res));
+        store = configureMockStore([thunk])({
+          categories: {
+            categories: [
+              { name: 'react', value: 'react' },
+              { name: 'redux', value: 'redux' },
+              { name: 'udacity', value: 'udacity' },
+            ],
+            isRequestPending: false,
+          },
+        });
+
+        wrapper = shallow(<CategoryList store={store} />);
+      });
+
+      it('dispatches FETCH_CATEGORY_POSTS_REQUEST if changed to a category', () => {
+        wrapper.find('DropdownList').first().props().onChange('react');
+        const expectedActions = [
+          {
+            type: '@@router/CALL_HISTORY_METHOD',
+            payload: { method: 'push', args: ['/categories/react'] },
+          },
+          { type: types.FETCH_CATEGORY_POSTS_REQUEST },
+        ];
+        expect(store.getActions()).to.eql(expectedActions);
+      });
+
+      it('dispatches FETCH_ALL_POSTS_REQUEST if changed to a root', () => {
+        wrapper.find('DropdownList').first().props().onChange('/');
+        const expectedActions = [
+          {
+            type: '@@router/CALL_HISTORY_METHOD',
+            payload: { method: 'push', args: ['/'] },
+          },
+          { type: types.FETCH_ALL_POSTS_REQUEST },
+        ];
+        expect(store.getActions()).to.eql(expectedActions);
+      });
     });
   });
 });

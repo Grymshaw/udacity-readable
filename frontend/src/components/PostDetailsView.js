@@ -7,7 +7,7 @@ import NewCommentFormContainer from './NewCommentFormContainer';
 import PostDetailsContainer from './PostDetailsContainer';
 
 const PostDetailsView = ({ match }) => (
-  <div>
+  <div style={{ width: '90%', margin: '0 auto' }}>
     <PostDetailsContainer id={match.params.id} />
     <NewCommentFormContainer parentId={match.params.id} />
     <CommentListContainer parentId={match.params.id} />
