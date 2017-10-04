@@ -29,7 +29,7 @@ class DropdownList extends Component {
           onChange(e.target.value);
           this.handleChange();
         }}
-        required={isRequired ? "required" : ""}
+        required={isRequired ? 'required' : ''}
         defaultValue={''}
         ref={(input) => { this.select = input; }}
       >
@@ -52,7 +52,7 @@ class DropdownList extends Component {
 
 DropdownList.propTypes = {
   fetchData: PropTypes.func,
-  isRequired: PropTypes.boolean,
+  isRequired: PropTypes.bool,
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func,
 };
