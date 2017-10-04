@@ -3,21 +3,16 @@
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import React from 'react';
-// import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
 
 import CommentListContainer from './CommentListContainer';
-import PostDetailsView from './PostDetailsView';
+import NewCommentFormContainer from './NewCommentFormContainer';
 import PostDetailsContainer from './PostDetailsContainer';
+import PostDetailsView from './PostDetailsView';
 
 describe('<PostDetailsView />', () => {
-  let store;
   let wrapper;
 
   beforeEach(() => {
-    store = configureMockStore()({
-      posts: { currentPost: '0', posts: {}, isRequestPending: false },
-    });
     wrapper = shallow(<PostDetailsView match={{ params: { id: '0' } }} />);
   });
 
@@ -29,14 +24,11 @@ describe('<PostDetailsView />', () => {
     expect(wrapper.find(PostDetailsContainer).length).to.equal(1);
   });
 
+  it('renders a <NewCommentFormContainer />', () => {
+    expect(wrapper.find(NewCommentFormContainer).length).to.equal(1);
+  });
+
   it('renders a <CommentListContainer />', () => {
     expect(wrapper.find(CommentListContainer).length).to.equal(1);
   });
-
-  // it('sets currentPost of store upon mounting', () => {
-  //   expect(store.getActions()).to.deep.include({
-  //     type: types.SET_CURRENT_POST,
-  //     currentPost: '0',
-  //   });
-  // });
 });

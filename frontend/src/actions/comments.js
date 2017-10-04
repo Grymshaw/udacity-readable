@@ -53,7 +53,7 @@ export const addComment = comment => (dispatch) => {
   return fetch(BASE_URL, {
     method: 'post',
     headers: HEADERS,
-    body: JSON.stringify({ comment }),
+    body: JSON.stringify(comment),
   })
     .then(res => res.json())
     .then(json => dispatch(addCommentSuccess(json)));
