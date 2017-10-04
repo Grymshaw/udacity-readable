@@ -26,26 +26,44 @@ describe('<DropdownList />', () => {
     expect(wrapper.find('select').length).to.be.above(0);
   });
 
-  it('renders a select with no options if `list` is not passed', () => {
+  it('renders a select with only default option if `list` is not passed', () => {
     wrapper = shallow(<DropdownList
       list={[]}
       onChange={onChange}
       fetchData={fetchData}
     />);
-    expect(wrapper.find('option').length).to.equal(0);
+    expect(wrapper.find('option').length).to.equal(1);
   });
 
-  it('renders a selcted with no options if `list` is []', () => {
+  it('renders a selcted with only default option if `list` is []', () => {
     wrapper = shallow(<DropdownList
       list={[]}
       onChange={onChange}
       fetchData={fetchData}
     />);
-    expect(wrapper.find('option').length).to.equal(0);
+    expect(wrapper.find('option').length).to.equal(1);
   });
 
   it('renders an `option` for each item in `list` param', () => {
-    expect(wrapper.find('option').length).to.equal(2);
+    // add 1 because of default "Select an option"
+    expect(wrapper.find('option').length).to.equal(2 + 1);
+  });
+
+  it('select is required if isRequired prop is true', () => {
+    const isRequired = true;
+    wrapper = shallow(<DropdownList list={[]} isRequired={isRequired} />);
+    expect(wrapper.find('select[required="required"]').length).to.equal(1);
+  });
+
+  it('select is not required if isRequired prop is not passed in', () => {
+    wrapper = shallow(<DropdownList list={[]} />);
+    expect(wrapper.find('select[required=""]').length).to.equal(1);
+  });
+
+  it('select is not required if isRequired prop is false', () => {
+    const isRequired = false;
+    wrapper = shallow(<DropdownList list={[]} isRequired={isRequired} />);
+    expect(wrapper.find('select[required=""]').length).to.equal(1);
   });
 
   it('calls `onChange` prop when new value selected', () => {

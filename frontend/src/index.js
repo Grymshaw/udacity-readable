@@ -10,6 +10,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import AddPostButton from './components/AddPostButton';
 import App from './components/App';
 import CategoryList from './components/CategoryList';
+import NewPostFormContainer from './components/NewPostFormContainer';
 import PostDetailsView from './components/PostDetailsView';
 import PrimaryNav from './components/PrimaryNav';
 import SortOrderList from './components/SortOrderList';
@@ -38,7 +39,7 @@ ReactDOM.render(
         {/* routes */}
         <Route exact path="/" component={App} />
         <Route path="/posts/:id" component={PostDetailsView} />
-        <Route path="/new" render={() => <h1>add a new post</h1>} />
+        <Route path="/new" component={NewPostFormContainer} />
       </div>
     </ConnectedRouter>
   </Provider>,
