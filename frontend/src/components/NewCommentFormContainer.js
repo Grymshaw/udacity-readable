@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import uuid from 'uuid/v4';
 
 import * as actions from '../actions/comments';
 import NewCommentForm from './NewCommentForm';
@@ -7,7 +8,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (comment) => {
     const newComment = {
       ...comment,
-      id: Math.round(Math.random() * 10000).toString(),
+      id: uuid(),
       parentId: ownProps.parentId,
       timestamp: Date.now(),
     };

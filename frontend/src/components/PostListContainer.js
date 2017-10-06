@@ -7,22 +7,8 @@ import * as currentPostActions from '../actions/currentPost';
 import PostList from './PostList';
 
 const mapStateToProps = state => ({
-  // get posts array from posts object in state
-  posts: Object.keys(state.posts.posts)
-    .map(key => state.posts.posts[key])
-    .sort((a, b) => {
-      switch (state.sortOrder.order) {
-        case 'recentFirst':
-          return b.timestamp - a.timestamp;
-        case 'oldestFirst':
-          return a.timestamp - b.timestamp;
-        case 'votesAscending':
-          return a.voteScore - b.voteScore;
-        case 'votesDescending':
-        default:
-          return b.voteScore - a.voteScore;
-      }
-    }),
+  posts: state.posts.posts,
+  sortOrder: state.sortOrder.order,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

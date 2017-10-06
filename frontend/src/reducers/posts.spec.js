@@ -7,7 +7,13 @@ import posts from './posts';
 
 describe('posts reducer', () => {
   it('should handle default state', () => {
-    const initialState = { currentPost: {}, posts: {}, isRequestPending: false };
+    const initialState = {
+      currentPost: {},
+      posts: {},
+      isRequestPending: false,
+      isEditing: false,
+      currentPostEditing: null,
+    };
     expect(posts(undefined, {})).to.deep.equal(initialState);
   });
 
@@ -15,8 +21,32 @@ describe('posts reducer', () => {
     const stateBefore = { currentPost: undefined, posts: {}, isRequestPending: false };
     const action = { type: types.SET_CURRENT_POST, id: '0' };
     expect(posts(stateBefore, action)).to.eql(
-      { currentPost: '0', posts: {}, isRequestPending: false }
+      { currentPost: '0', posts: {}, isRequestPending: false },
     );
+  });
+
+  it('should handle SET_IS_POST_EDITING', () => {
+    const stateBefore = {
+      currentPost: undefined,
+      posts: {},
+      isRequestPending: false,
+      isEditing: false,
+      currentPostEditing: null,
+    };
+    const action = {
+      type: types.SET_IS_POST_EDITING,
+      currentPostEditing: '0',
+      isEditing: true,
+    };
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+    expect(posts(stateBefore, action)).to.eql({
+      currentPost: undefined,
+      posts: {},
+      isRequestPending: false,
+      isEditing: true,
+      currentPostEditing: '0',
+    });
   });
 
   describe('posts reducer <blank>_REQUESTs', () => {

@@ -21,6 +21,9 @@ describe('<PostListContainer />', () => {
     title: 'Udacity is the best place to learn React',
     voteScore: 6,
   }];
+  const postsObject = {
+    '8xf0y6ziyjabvozdd253nd': postsResponse[0],
+  };
 
   let wrapper;
   let store;
@@ -55,6 +58,7 @@ describe('<PostListContainer />', () => {
         },
         isRequestPending: false,
       },
+      sortOrder: { order: 'votesDescending' },
     });
     // sinon.spy(store, 'dispatch');
     wrapper = mount(
@@ -83,7 +87,7 @@ describe('<PostListContainer />', () => {
     });
 
     it('receives `posts` in props', () => {
-      expect(postList.first().props().posts).to.eql(postsResponse);
+      expect(postList.first().props().posts).to.eql(postsObject);
     });
 
     it('receives `onMount` in props', () => {
@@ -121,6 +125,7 @@ describe('<PostListContainer />', () => {
           },
           isRequestPending: false,
         },
+        sortOrder: { order: 'votesDescending' },
       });
       wrapper = mount(
         <Provider store={store}>

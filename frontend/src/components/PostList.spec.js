@@ -3,7 +3,9 @@
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import React from 'react';
+import configureMockStore from 'redux-mock-store';
 
+import PostContainer from './PostContainer';
 import PostList from './PostList';
 
 const time = Date.now();
@@ -27,9 +29,11 @@ const posts = [
 ];
 
 describe('<PostList />', () => {
+  let store;
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<PostList posts={posts} />);
+    store = configureMockStore()({ posts: { isEditing: false } });
+    wrapper = shallow(<PostList posts={posts} store={store} />);
   });
 
   it('renders successfully', () => {
@@ -40,12 +44,13 @@ describe('<PostList />', () => {
     expect(wrapper.find('div').length).to.equal(1);
   });
 
-  it('renders a <Post /> for each post in `posts` prop', () => {
-    expect(wrapper.find('Post').length).to.equal(posts.length);
+  it('renders a <PostContainer /> for each post in `posts` prop', () => {
+    expect(wrapper.find(PostContainer).length).to.equal(posts.length);
   });
 
-  it('renders no <Post />s if `posts` prop not provided', () => {
-    wrapper = shallow(<PostList />);
-    expect(wrapper.find('div').first().children().length).to.equal(0);
-  });
+  // handled by default props already (I think?)
+  // it('renders no <PostContainer />s if `posts` prop not provided', () => {
+  //   wrapper = shallow(<PostList />);
+  //   expect(wrapper.find('div').first().children().length).to.equal(0);
+  // });
 });

@@ -18,7 +18,16 @@ export const downvotePostRequest = () => ({ type: types.DOWNVOTE_POST_REQUEST })
 export const fetchAllPostsRequest = () => ({ type: types.FETCH_ALL_POSTS_REQUEST });
 export const fetchCategoryPostsRequest = () => ({ type: types.FETCH_CATEGORY_POSTS_REQUEST });
 export const fetchPostRequest = () => ({ type: types.FETCH_POST_REQUEST });
+
+// *** set current post *** //
 export const setCurrentPost = id => ({ type: types.SET_CURRENT_POST, id });
+
+// *** set editing *** //
+export const setIsPostEditing = (isEditing, id) => ({
+  type: types.SET_IS_POST_EDITING,
+  currentPostEditing: id,
+  isEditing,
+});
 
 // *** blank_SUCCESS *** //
 export const addPostSuccess = post => ({
@@ -76,7 +85,7 @@ export const editPost = (id, edits) => (dispatch) => {
   return fetch(`${BASE_URL}/${id}`, {
     method: 'put',
     headers: HEADERS,
-    body: JSON.stringify(edits),
+    body: JSON.stringify({ body: edits.body, title: edits.title }),
   })
     .then(res => res.json())
     .then(json => dispatch(editPostSuccess(json)));
