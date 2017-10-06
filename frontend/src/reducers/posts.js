@@ -4,6 +4,8 @@ const initialState = {
   currentPost: {},
   posts: {},
   isRequestPending: false,
+  isEditing: false,
+  currentPostEditing: null,
 };
 
 const posts = (state = initialState, action) => {
@@ -39,6 +41,12 @@ const posts = (state = initialState, action) => {
       return { ...state, currentPost: action.post, isRequestPending: false };
     case types.SET_CURRENT_POST:
       return { ...state, currentPost: action.id };
+    case types.SET_IS_POST_EDITING:
+      return {
+        ...state,
+        isEditing: action.isEditing,
+        currentPostEditing: action.currentPostEditing,
+      };
     default:
       return state;
   }

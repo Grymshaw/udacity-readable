@@ -111,6 +111,13 @@ describe('post actions', () => {
   it('setCurrentPost creates SET_CURRENT_POST action', () => {
     expect(actions.setCurrentPost('0')).to.eql({ type: types.SET_CURRENT_POST, id: '0' });
   });
+  it('setIsPostEditing creates SET_IS_POST_EDITING action', () => {
+    expect(actions.setIsPostEditing(true, '0')).to.eql({
+      type: types.SET_IS_POST_EDITING,
+      isEditing: true,
+      currentPostEditing: '0',
+    });
+  });
 });
 
 describe('async post actions', () => {
