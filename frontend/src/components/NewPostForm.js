@@ -1,6 +1,7 @@
 /* eslint "react/jsx-filename-extension": 0 */
 import PropTypes from 'prop-types';
 import React from 'react';
+import uuid from 'uuid/v4';
 
 import DropdownList from './DropdownList';
 
@@ -11,7 +12,7 @@ const NewPostForm = ({ categories, onSubmit }) => {
   let title;
 
   const getPost = () => ({
-    id: Math.round(Math.random() * 10000).toString(),
+    id: uuid(),
     category: category.value,
     name: name.value,
     body: body.value,
