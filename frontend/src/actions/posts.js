@@ -85,7 +85,7 @@ export const editPost = (id, edits) => (dispatch) => {
   return fetch(`${BASE_URL}/${id}`, {
     method: 'put',
     headers: HEADERS,
-    body: JSON.stringify(edits),
+    body: JSON.stringify({ body: edits.body, title: edits.title }),
   })
     .then(res => res.json())
     .then(json => dispatch(editPostSuccess(json)));
