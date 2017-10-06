@@ -1,5 +1,6 @@
 /* eslint "react/jsx-filename-extension": 0 */
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import React from 'react';
 
 import CommentVotingContainer from './CommentVotingContainer';
@@ -10,7 +11,7 @@ const Comment = ({ comment }) => (
     <div className="comment__footer">
       {comment.voteScore} points <br />
       by {comment.author} <br />
-      {comment.timestamp}
+      {moment(comment.timestamp).fromNow()}
     </div>
     <CommentVotingContainer commentId={comment.id} />
   </div>

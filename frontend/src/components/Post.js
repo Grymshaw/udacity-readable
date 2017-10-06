@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import moment from 'moment';
 
 import PostVotingContainer from './PostVotingContainer';
 
@@ -15,7 +16,7 @@ const Post = ({ onPostClick, post }) => (
     </div>
     <div className="post-footer">
       <PostVotingContainer postId={post.id} />
-      {post.voteScore} points by {post.author} at {post.timestamp}
+      {post.voteScore} points by {post.author} at {moment(post.timestamp).fromNow()}
       <br />
       Category: {post.category}
     </div>

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -17,7 +18,7 @@ class PostDetails extends Component {
           <div className="post-subtitle">
             {post.voteScore} points by {post.author}
             <br />
-            {post.timestamp}
+            {moment(post.timestamp).fromNow()}
           </div>
           <div className="post-body">
             {post.body}

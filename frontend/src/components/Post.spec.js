@@ -1,6 +1,7 @@
 /* eslint "no-undef": 0 */
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import moment from 'moment';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
@@ -85,8 +86,8 @@ describe('<Post />', () => {
       expect(postFooterWrapper.text()).to.contain(post.category);
     });
 
-    it('should contain timestamp', () => {
-      expect(postFooterWrapper.text()).to.contain(post.timestamp);
+    it('should contain formatted timestamp', () => {
+      expect(postFooterWrapper.text()).to.contain(moment(post.timestamp).fromNow());
     });
 
     it('should contain vote score', () => {
