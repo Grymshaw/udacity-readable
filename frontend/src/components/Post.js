@@ -43,7 +43,10 @@ class Post extends Component {
         <br />
         <button
           className="edit-action edit-action--cancel"
-          onClick={onCancelEdit}
+          onClick={() => {
+            onCancelEdit();
+            this.setState({ body: post.body, title: post.title });
+          }}
         >
           Cancel
         </button>

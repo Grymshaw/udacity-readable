@@ -49,13 +49,12 @@ describe('<PostDetailsContainer />', () => {
     store = configureMockStore()({
       posts: {
         posts,
-        currentPost: posts[0],
+        currentPost: posts[0].id,
       },
     });
-    // sinon.stub(store, 'dispatch');
     wrapper = mount(
       <Provider store={store}>
-        <PostDetailsContainer store={store} params={{ id: '0' }} />
+        <PostDetailsContainer id={'0'} params={{ id: '0' }} />
       </Provider>,
     );
   });
@@ -83,6 +82,26 @@ describe('<PostDetailsContainer />', () => {
       // expect(store.dispatch.callCount).to.equal(expectedActions.length);
       // expect(store.dispatch.calledWith(expectedActions[0])).to.equal(true);
       // expect(store.dispatch.calledWith(expectedActions[1])).to.equal(true);
+    });
+
+    it('receives `onEdit` in props', () => {
+      wrapper.find('PostDetails').first().props().onEdit('0');
+      const expectedActions = [
+        { type: types.FETCH_ALL_POSTS_REQUEST },
+        { type: types.FETCH_ALL_POSTS_SUCCESS, posts },
+        { type: types.SET_IS_POST_EDITING, isEditing: true, currentPostEditing: '0' },
+      ];
+      expect(store.getActions()).to.eql(expectedActions);
+    });
+
+    it('receives `onEditCancel` in props', () => {
+      wrapper.find('PostDetails').first().props().onEditCancel();
+      const expectedActions = [
+        { type: types.FETCH_ALL_POSTS_REQUEST },
+        { type: types.FETCH_ALL_POSTS_SUCCESS, posts },
+        { type: types.SET_IS_POST_EDITING, isEditing: false, currentPostEditing: null },
+      ];
+      expect(store.getActions()).to.eql(expectedActions);
     });
   });
 });
