@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 import CommentList from './CommentList';
+import CommentContainer from './CommentContainer';
 
 describe('<CommentList />', () => {
   const comments = [
@@ -27,7 +28,7 @@ describe('<CommentList />', () => {
     expect(wrapper.find('div').length).to.equal(1);
   });
 
-  it('renders a <Comment /> for each in `comments` prop', () => {
-    expect(wrapper.find('Comment').length).to.equal(comments.length);
+  it('renders a <CommentContainer /> for each in `comments` prop', () => {
+    expect(wrapper.find(CommentContainer).length).to.equal(comments.length);
   });
 });

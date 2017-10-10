@@ -7,9 +7,35 @@ import comments from './comments';
 
 describe('comments reducer', () => {
   it('should handle default state', () => {
-    const initialState = { comments: {}, isRequestPending: false };
+    const initialState = {
+      comments: {},
+      isRequestPending: false,
+      isEditing: false,
+      currentCommentEditing: null,
+    };
     expect(comments(undefined, {})).to.deep.equal(initialState);
   });
+
+  it('should handle SET_IS_POST_EDITING', () => {
+    const stateBefore = {
+      comments: [],
+      isRequestPending: false,
+      isEditing: false,
+      currentCommentEditing: null,
+    };
+    const action = {
+      type: types.SET_IS_COMMENT_EDITING,
+      isEditing: true,
+      currentCommentEditing: '0',
+    };
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(comments(stateBefore, action)).to.eql({
+      comments: [], isRequestPending: false, isEditing: true, currentCommentEditing: '0',
+    });
+  });
+
   describe('comments reducer <blank>_REQUESTs', () => {
     it('should handle ADD_COMMENT_REQUEST', () => {
       const stateBefore = { comments: {}, isRequestPending: false };

@@ -98,7 +98,7 @@ describe('<Post />', () => {
     it('calls `onEdit` when edit clicked', () => {
       wrapper.find('span.post-action--edit').simulate('click');
       expect(onEdit.calledOnce).to.equal(true);
-      expect(onDelete.args[0]).to.eql([]);
+      expect(onEdit.args[0]).to.eql([]);
     });
 
     describe('rendered .post-title', () => {

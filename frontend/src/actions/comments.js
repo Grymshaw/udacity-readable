@@ -16,6 +16,12 @@ export const upvoteCommentRequest = () => ({ type: types.UPVOTE_COMMENT_REQUEST 
 export const downvoteCommentRequest = () => ({ type: types.DOWNVOTE_COMMENT_REQUEST });
 export const fetchPostCommentsRequest = () => ({ type: types.FETCH_POST_COMMENTS_REQUEST });
 
+export const setIsCommentEditing = (isEditing, commentId) => ({
+  type: types.SET_IS_COMMENT_EDITING,
+  isEditing,
+  currentCommentEditing: commentId,
+});
+
 /* blank_SUCCESS */
 export const addCommentSuccess = comment => ({
   type: types.ADD_COMMENT_SUCCESS,

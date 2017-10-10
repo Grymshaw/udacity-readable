@@ -1,7 +1,9 @@
 /* eslint "no-undef": 0 */
+/* eslint "react/jsx-filename-extension": 0 */
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 
@@ -33,10 +35,17 @@ describe('<CommentListContainer />', () => {
 
     store = configureMockStore()({
       comments: {
-        comments: [],
+        comments,
+      },
+      sortOrder: {
+        order: 'votesAscending',
       },
     });
-    wrapper = mount(<CommentListContainer store={store} />);
+    wrapper = mount(
+      <Provider store={store}>
+        <CommentListContainer parentId={'1'} sortOrder="votesAscending" />
+      </Provider>
+    );
   });
 
   afterEach(() => {
