@@ -3,6 +3,8 @@ import * as types from '../constants/ActionTypes';
 const initialState = {
   comments: {},
   isRequestPending: false,
+  isEditing: false,
+  currentCommentEditing: null,
 };
 
 const comments = (state = initialState, action) => {
@@ -33,6 +35,12 @@ const comments = (state = initialState, action) => {
         return acc;
       }, {});
       return { comments: newComments, isRequestPending: false };
+    case types.SET_IS_COMMENT_EDITING:
+      return {
+        ...state,
+        isEditing: action.isEditing,
+        currentCommentEditing: action.currentCommentEditing,
+      };
     default:
       return state;
   }

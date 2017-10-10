@@ -92,6 +92,13 @@ describe('comment actions', () => {
       comments: [comment, comment],
     });
   });
+  it('setIsCommentEditing creates SET_IS_COMMENT_EDITING action', () => {
+    expect(actions.setIsCommentEditing(true, '0')).to.eql({
+      type: types.SET_IS_COMMENT_EDITING,
+      isEditing: true,
+      currentCommentEditing: '0',
+    });
+  });
 });
 
 describe('async comment actions', () => {
@@ -223,27 +230,27 @@ describe('async comment actions', () => {
   it('creates FETCH_POST_COMMENTS_SUCCESS when finished fetching a post\'s comments', () => {
     const res = [
       {
-        author: "thingtwo",
-        body: "Hi there! I am a COMMENT.",
+        author: 'thingtwo',
+        body: 'Hi there! I am a COMMENT.',
         deleted: false,
-        id: "894tuq4ut84ut8v4t8wun89g",
+        id: '894tuq4ut84ut8v4t8wun89g',
         parentDeleted: false,
-        parentId: "8xf0y6ziyjabvozdd253nd",
+        parentId: '8xf0y6ziyjabvozdd253nd',
         timestamp: 1468166872634,
         voteScore: 6,
       },
       {
-        author: "thingone",
-        body: "Comments. Are. Cool.",
+        author: 'thingone',
+        body: 'Comments. Are. Cool.',
         deleted: false,
-        id: "8tu4bsun805n8un48ve89",
+        id: '8tu4bsun805n8un48ve89',
         parentDeleted: false,
-        parentId: "8xf0y6ziyjabvozdd253nd",
+        parentId: '8xf0y6ziyjabvozdd253nd',
         timestamp: 1469479767190,
         voteScore: -5,
       },
     ];
-    window.fetch= jest.fn(() =>
+    window.fetch = jest.fn(() =>
       Promise.resolve(mockResponse(200, null, JSON.stringify(res))));
     const store = mockStore({});
     const expectedActions = [
