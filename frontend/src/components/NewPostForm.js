@@ -52,13 +52,6 @@ class NewPostForm extends Component {
     e.preventDefault();
     const post = this.getPost();
     this.props.onSubmit(post);
-    // // reset form values
-    // this.setState({
-    //   body: "",
-    //   category: "",
-    //   name: "",
-    //   title: "",
-    // });
   }
 
   render() {
