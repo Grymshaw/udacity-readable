@@ -141,9 +141,9 @@ describe('<PostListContainer />', () => {
     });
 
     it('receives `onPostClick` in props', () => {
-      postList.first().props().onPostClick('0');
+      postList.first().props().onPostClick({ id: '0', category: 'react' });
       const expectedActions = [
-        { type: '@@router/CALL_HISTORY_METHOD', payload: { method: 'push', args: ['/posts/0'] } },
+        { type: '@@router/CALL_HISTORY_METHOD', payload: { method: 'push', args: ['/react/0'] } },
         { type: types.SET_CURRENT_POST, postId: '0' },
       ];
       expect(store.getActions()).to.deep.include(expectedActions[0]);

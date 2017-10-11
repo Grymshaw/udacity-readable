@@ -33,7 +33,7 @@ class PostList extends React.Component {
         {postsArray.map(post => (
           <PostContainer
             key={post.id}
-            onPostClick={onPostClick}
+            onPostClick={() => onPostClick(post)}
             post={post}
           />
         ))}

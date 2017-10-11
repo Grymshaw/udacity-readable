@@ -11,8 +11,12 @@ const sortOrders = [
 ];
 
 const mapDispatchToProps = dispatch => ({
-  onChange: sortOrder => dispatch(actions.setSortOrder(sortOrder)),
+  onChange: e => dispatch(actions.setSortOrder(e.target.value)),
   list: sortOrders,
 });
 
-export default connect(null, mapDispatchToProps)(DropdownList);
+const mapStateToProps = state => ({
+  value: state.sortOrder.order,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DropdownList);

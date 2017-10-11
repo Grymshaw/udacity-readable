@@ -7,11 +7,12 @@ import DropdownList from './DropdownList';
 
 const mapDispatchToProps = dispatch => ({
   fetchData: () => categoryActions.fetchAllCategories()(dispatch),
-  onChange: (category) => {
+  onChange: (event) => {
+    const category = event.target.value;
     // check if category should lead to root path
     const path = category === '/'
       ? category
-      : `/categories/${category}`;
+      : `/${category}`;
     dispatch(push(path));
     // fetch category-related posts or all posts
     if (category !== '/') {
@@ -22,7 +23,8 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+  value: ownProps.category,
   // categories nested in state b/c of combineReducers()
   list: [{ name: 'View all', value: '/' }, ...(state.categories.categories)],
 });

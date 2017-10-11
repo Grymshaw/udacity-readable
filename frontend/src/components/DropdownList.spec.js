@@ -69,6 +69,6 @@ describe('<DropdownList />', () => {
   it('calls `onChange` prop when new value selected', () => {
     wrapper.simulate('change', { target: { value: 'udacity' } });
     expect(onChange.callCount).to.equal(1);
-    expect(onChange.calledWith('udacity')).to.equal(true);
+    expect(onChange.calledWith({ target: { value: 'udacity' } })).to.equal(true);
   });
 });

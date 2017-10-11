@@ -1,4 +1,5 @@
 /* eslint "no-undef": 0 */
+/* eslint "react/jsx-filename-extension": 0 */
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import React from 'react';

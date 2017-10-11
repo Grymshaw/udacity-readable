@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 class DropdownList extends Component {
   constructor(props) {
     super(props);
+    this.state = { value: props.value };
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -12,26 +13,24 @@ class DropdownList extends Component {
     this.props.fetchData();
   }
 
-  handleChange() {
-    const { list } = this.props;
-    if (this.select) {
-      this.value = this.select.value;
-    } else {
-      this.value = list.length ? list[0] : null;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({ value: nextProps.value });
     }
   }
 
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+    this.props.onChange(e);
+  }
+
   render() {
-    const { isRequired, list, onChange } = this.props;
+    const { isRequired, list } = this.props;
     return (
       <select
-        onChange={(e) => {
-          onChange(e.target.value);
-          this.handleChange();
-        }}
+        onChange={e => this.handleChange(e)}
         required={isRequired ? 'required' : ''}
-        defaultValue={''}
-        ref={(input) => { this.select = input; }}
+        value={this.state.value}
       >
         {/* default option */}
         <option disabled value="">Select an option</option>

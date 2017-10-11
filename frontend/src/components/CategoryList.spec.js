@@ -107,11 +107,11 @@ describe('<CategoryList />', () => {
       });
 
       it('dispatches FETCH_CATEGORY_POSTS_REQUEST if changed to a category', () => {
-        wrapper.find('DropdownList').first().props().onChange('react');
+        wrapper.find('DropdownList').first().props().onChange({ target: { value: 'react' } });
         const expectedActions = [
           {
             type: '@@router/CALL_HISTORY_METHOD',
-            payload: { method: 'push', args: ['/categories/react'] },
+            payload: { method: 'push', args: ['/react'] },
           },
           { type: types.FETCH_CATEGORY_POSTS_REQUEST },
         ];
@@ -119,7 +119,7 @@ describe('<CategoryList />', () => {
       });
 
       it('dispatches FETCH_ALL_POSTS_REQUEST if changed to a root', () => {
-        wrapper.find('DropdownList').first().props().onChange('/');
+        wrapper.find('DropdownList').first().props().onChange({ target: { value: '/' } });
         const expectedActions = [
           {
             type: '@@router/CALL_HISTORY_METHOD',

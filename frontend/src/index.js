@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
@@ -38,10 +38,12 @@ ReactDOM.render(
           </div>
         </Subnav>
         {/* routes */}
-        <Route exact path="/" component={App} />
-        <Route path="/categories/:category" component={CategoryListView} />
-        <Route path="/posts/:id" component={PostDetailsView} />
-        <Route path="/new" component={NewPostFormContainer} />
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/new" component={NewPostFormContainer} />
+          <Route exact path="/:category" component={CategoryListView} />
+          <Route exact path="/:category/:id" component={PostDetailsView} />
+        </Switch>
       </div>
     </ConnectedRouter>
   </Provider>,

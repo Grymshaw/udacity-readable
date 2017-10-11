@@ -46,7 +46,7 @@ describe('<SortOrderList />', () => {
     });
 
     it('receives onChange prop from <SortOrderList />', () => {
-      wrapper.find('DropdownList').first().props().onChange('votesDescending');
+      wrapper.find('DropdownList').first().props().onChange({ target: { value: 'votesDescending' } });
       expect(store.dispatch.calledOnce).to.equal(true);
       expect(store.dispatch.calledWith({ type: types.CHANGE_SORT_ORDER, order: 'votesDescending' }));
     });
