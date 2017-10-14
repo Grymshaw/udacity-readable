@@ -2,6 +2,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import './NewCommentForm.css';
+
 class NewCommentForm extends Component {
   constructor(props) {
     super(props);
@@ -30,11 +32,16 @@ class NewCommentForm extends Component {
 
   render() {
     return (
-      <form onSubmit={e => this.handleSubmit(e)}>
+      <form
+        className="comment-form"
+        onSubmit={e => this.handleSubmit(e)}
+      >
+        <h3>Add your comment</h3>
         <label htmlFor="name">
           Your name:
           <br />
           <input
+            className="comment-form__input comment-form__input--text"
             type="text"
             value={this.state.author}
             onChange={e => this.handleAuthorChange(e)}
@@ -47,6 +54,7 @@ class NewCommentForm extends Component {
           Comment:
           <br />
           <textarea
+            className="comment-form__input comment-form__input--textarea"
             required
             value={this.state.body}
             onChange={e => this.handleBodyChange(e)}
@@ -55,47 +63,16 @@ class NewCommentForm extends Component {
         </label>
         <br />
         <br />
-        <button type="submit">Add comment</button>
+        <button
+          className="comment-form__button comment-form__button--submit"
+          type="submit"
+        >
+          Add comment
+        </button>
       </form>
     );
   }
 }
-
-// const NewCommentForm = ({ onSubmit }) => {
-//   let author;
-//   let body;
-
-//   const getData = () => ({
-//     author: author.value,
-//     body: body.value,
-//   });
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const comment = getData();
-//     onSubmit(comment);
-//   };
-
-//   return (
-//     <form onSubmit={e => handleSubmit(e)}>
-//       <label htmlFor="name">
-//         Your name:
-//         <br />
-//         <input type="text" ref={(input) => { author = input; }} name="name" />
-//       </label>
-//       <br />
-//       <br />
-//       <label htmlFor="body">
-//         Comment:
-//         <br />
-//         <textarea required ref={(input) => { body = input; }} name="body" />
-//       </label>
-//       <br />
-//       <br />
-//       <button type="submit">Add comment</button>
-//     </form>
-//   );
-// };
 
 NewCommentForm.propTypes = {
   onSubmit: PropTypes.func,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import React, { Component } from 'react';
 
+import './Comment.css';
 import CommentVotingContainer from './CommentVotingContainer';
 
 class Comment extends Component {
@@ -21,60 +22,64 @@ class Comment extends Component {
   render() {
     const { comment, isEditing, onDelete, onEdit, onEditCancel, onEditSubmit } = this.props;
     return (
-      isEditing
-        ? <form>
-          <textarea value={this.state.body} onChange={e => this.handleChange(e)} />
-          <button
-            className="edit-action edit-action--cancel"
-            onClick={() => {
-              onEditCancel();
-              this.setState({ body: comment.body });
-            }}
-          >
-            Cancel
-          </button>
-          <button
-            className="edit-action edit-action--submit"
-            onClick={() => {
-              onEditSubmit({ body: this.state.body, timestamp: Date.now() });
-            }}
-          >
-            Submit changes
-          </button>
-        </form>
-        : <div className="comment">
-          <p className="comment__body">{comment.body}</p>
-          <div className="comment__footer">
-            {comment.voteScore} points <br />
-            by {comment.author} <br />
-            {moment(comment.timestamp).fromNow()}
-          </div>
-          <CommentVotingContainer commentId={comment.id} />
-          <div className="comment-actions">
-            <span
-              onClick={(e) => {
-                e.preventDefault();
-                onDelete();
+      <div className="comment">
+        {isEditing
+          ? <form>
+            <textarea className="edit-form__input edit-form__input--textarea" value={this.state.body} onChange={e => this.handleChange(e)} />
+            <button
+              className="edit-action edit-action--cancel"
+              onClick={() => {
+                onEditCancel();
+                this.setState({ body: comment.body });
               }}
-              className="comment-action comment-action--delete"
-              role="button"
-              tabIndex={0}
             >
-              Delete
-            </span>
-            <span
-              onClick={(e) => {
-                e.preventDefault();
-                onEdit();
+              Cancel
+            </button>
+            <button
+              className="edit-action edit-action--submit"
+              onClick={() => {
+                onEditSubmit({ body: this.state.body, timestamp: Date.now() });
               }}
-              className="comment-action comment-action--edit"
-              role="button"
-              tabIndex={0}
             >
-              Edit
-            </span>
-          </div>
-        </div>
+              Submit changes
+            </button>
+          </form>
+          : <div>
+            <p className="comment__body">{comment.body}</p>
+            <div className="comment__footer">
+              {comment.voteScore} points by {comment.author}
+              <br />
+              {moment(comment.timestamp).fromNow()}
+            </div>
+            <div className="comment-actions">
+              <CommentVotingContainer commentId={comment.id} />
+              <div style={{ height: '25px' }}>
+                <span
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onEdit();
+                  }}
+                  className="comment-action comment-action--edit"
+                  role="button"
+                  tabIndex={0}
+                >
+                  Edit
+                </span>
+                <span
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onDelete();
+                  }}
+                  className="comment-action comment-action--delete"
+                  role="button"
+                  tabIndex={0}
+                >
+                  Delete
+                </span>
+              </div>
+            </div>
+          </div>}
+      </div>
     );
   }
 }

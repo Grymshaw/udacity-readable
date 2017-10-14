@@ -85,6 +85,10 @@ describe('<Post />', () => {
       expect(wrapper.find('div').length).to.be.above(0);
     });
 
+    it('should contain a <PostVotingContainer />', () => {
+      expect(wrapper.find(PostVotingContainer).length).to.equal(1);
+    });
+
     it('renders a delete and an edit actions', () => {
       expect(wrapper.find('span.post-action').length).to.equal(2);
     });
@@ -146,10 +150,6 @@ describe('<Post />', () => {
 
       it('should contain vote score', () => {
         expect(postFooterWrapper.text()).to.contain(post.voteScore);
-      });
-
-      it('should contain a <PostVotingContainer />', () => {
-        expect(postFooterWrapper.find(PostVotingContainer).length).to.equal(1);
       });
     });
   });

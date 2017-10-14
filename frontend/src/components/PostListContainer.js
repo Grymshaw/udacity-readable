@@ -16,6 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ? () => postActions.fetchAllPosts()(dispatch)
     : () => postActions.fetchCategoryPosts(ownProps.category)(dispatch);
   return {
+    category: ownProps.category,
     onMount,
     onPostClick: (post) => {
       dispatch(currentPostActions.setCurrentPost(post.id));

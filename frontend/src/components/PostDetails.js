@@ -3,6 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import './PostDetails.css';
 import PostVotingContainer from './PostVotingContainer';
 
 class PostDetails extends Component {
@@ -33,75 +34,83 @@ class PostDetails extends Component {
   render() {
     const { isEditing, onDelete, onEdit, onEditCancel, onEditSubmit, post } = this.props;
     return (
-      isEditing
-        ? <form>
-          <input
-            type="text"
-            value={this.state.title}
-            onChange={e => this.handleTitleChange(e)}
-          />
-          <br />
-          <textarea
-            value={this.state.body}
-            onChange={e => this.handleBodyChange(e)}
-          />
-          <br />
-          <button
-            className="edit-action edit-action--cancel"
-            onClick={() => {
-              onEditCancel();
-              // reset state to initial post
-              this.setState({ body: post.body, title: post.title });
-            }}
-          >
-            Cancel
-          </button>
-          <br />
-          <button
-            className="edit-action edit-action--submit"
-            onClick={() => onEditSubmit({
-              body: this.state.body,
-              title: this.state.title,
-            })}
-          >
-            Submit changes
-          </button>
-          <br />
-        </form>
-        : <div>
-          <div className="post-title">{post.title}</div>
-          <div className="post-subtitle">
-            {post.voteScore} points by {post.author}
+      <div className="post-details">
+        {isEditing
+          ? <form className="edit-form">
+            <label htmlFor="title">Title</label>
+            <input
+              className="edit-form__input edit-form__input--text"
+              name="title"
+              type="text"
+              value={this.state.title}
+              onChange={e => this.handleTitleChange(e)}
+            />
             <br />
-            {moment(post.timestamp).fromNow()}
-          </div>
-          <div className="post-body">
-            {post.body}
-          </div>
-
-          <div className="voting-actions voting-actions--post-detail">
-            <PostVotingContainer postId={post.id} />
-          </div>
-
-          <div className="post-actions">
-            <span
-              className="post-action post-action--edit"
-              onClick={onEdit}
-              role="button"
-              tabIndex={0}
+            <label htmlFor="body">Body</label>
+            <textarea
+              className="edit-form__input edit-form__input--textarea"
+              name="body"
+              value={this.state.body}
+              onChange={e => this.handleBodyChange(e)}
+            />
+            <br />
+            <button
+              className="edit-action edit-action--cancel"
+              onClick={() => {
+                onEditCancel();
+                // reset state to initial post
+                this.setState({ body: post.body, title: post.title });
+              }}
             >
-              Edit
-            </span>
-            <span
-              className="post-action post-action--delete"
-              onClick={onDelete}
-              role="button"
-              tabIndex={0}
+              Cancel
+            </button>
+            <button
+              className="edit-action edit-action--submit"
+              onClick={() => onEditSubmit({
+                body: this.state.body,
+                title: this.state.title,
+              })}
             >
-              Delete
-            </span>
+              Submit changes
+            </button>
+            <br />
+          </form>
+          : <div>
+            <div className="post-title post-title--details">{post.title}</div>
+            <div className="post-subtitle">
+              {post.voteScore} point{post.voteScore === 1 ? '' : 's'} by {post.author} ({moment(post.timestamp).fromNow()})
+              <br />
+              in {post.category}
+            </div>
+            <div className="post-body">
+              {post.body}
+            </div>
+
+            <div className="post-actions--details">
+              <PostVotingContainer postId={post.id} />
+              <div>
+                <span
+                  className="post-action post-action--edit"
+                  onClick={onEdit}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Edit
+                </span>
+                <span
+                  className="post-action post-action--delete"
+                  onClick={onDelete}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Delete
+                </span>
+              </div>
+            </div>
+
           </div>
-        </div>
+        }
+      </div>
     );
   }
 }

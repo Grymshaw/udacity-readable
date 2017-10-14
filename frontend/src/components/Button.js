@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Button = ({ children, onClick }) => (
-  <button onClick={onClick}>
+const Button = ({ children, className, onClick }) => (
+  <button onClick={onClick} className={className}>
     {children}
   </button>
 );

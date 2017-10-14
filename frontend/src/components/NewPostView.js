@@ -1,24 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-import AddPostButton from './AddPostButton';
-import CategoryList from './CategoryList';
+import Navigation from './Navigation';
 import NewPostFormContainer from './NewPostFormContainer';
-import PrimaryNav from './PrimaryNav';
-import Subnav from './Subnav';
 
 const NewPostView = ({ match }) => (
   <div>
-    <PrimaryNav>
-      <h3><Link to="/">Readable</Link></h3>
-    </PrimaryNav>
-    <Subnav>
-      <AddPostButton>Add post +</AddPostButton>
-      <div>
-        <CategoryList category={match.params.category} />
-      </div>
-    </Subnav>
-    <NewPostFormContainer />
+    <Navigation match={match} />
+    <div className="page">
+      <NewPostFormContainer category="" />
+    </div>
   </div>
 );
 

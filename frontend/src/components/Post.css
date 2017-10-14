@@ -1,0 +1,95 @@
+.edit-action {
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin: 5px 2px;
+}
+
+.edit-action--cancel:hover {
+  color: #f93431;
+}
+
+.edit-action--submit:hover {
+  color: #26B4B3;
+}
+
+.edit-form__input {
+  box-sizing: border-box;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.edit-form__input--textarea {
+  border: 1px solid lightgrey;
+  height: 100px;
+  overflow-y: scroll;
+  resize: none;
+}
+
+.post {
+  width: 75%;
+  margin: 15px auto;
+  border: 1px solid black;
+  position: relative;
+  box-sizing: border-box;
+  padding: 10px 10px;
+}
+
+.post-title {
+  max-width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.post-title--details {
+  word-wrap: break-word;
+}
+
+.post-title--list {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-title--list:hover {
+  color: grey;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.post-footer {
+  color: grey;
+  font-size: 0.9rem;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* position: absolute; */
+  /* right: 10px; */
+  /* bottom: 10px; */
+}
+
+.post-action {
+  display: inline-block;
+  margin: 0 5px;
+  min-width: 40px;
+  padding: 2px 5px;
+  text-align: center;
+  /* margin: 10px 5px; */
+}
+
+.post-action:hover {
+  border-bottom: 1px solid;
+  cursor: pointer;
+}
+
+.post-action--edit:hover {
+  color: #26B4B3;
+}
+
+.post-action--delete:hover {
+  color: #F93431;
+}

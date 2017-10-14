@@ -1,0 +1,20 @@
+.voting-action {
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  color: black;
+  font-size: 0.9rem;
+  margin: 5px 2px;
+}
+
+.voting-action:hover {
+  cursor: pointer;
+}
+
+.voting-action--downvote:hover {
+  color: #F93431;
+}
+
+.voting-action--upvote:hover {
+  color: #26b4b3;
+}

@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import './CommentList.css';
 import CommentContainer from './CommentContainer';
 
 class CommentList extends Component {
@@ -28,6 +29,7 @@ class CommentList extends Component {
       });
     return (
       <div className="comment-list">
+        <h3>Comments:</h3>
         {orderedComments.map(comment => <CommentContainer key={comment.id} comment={comment} />)}
       </div>
     );

@@ -4,7 +4,7 @@ import React from 'react';
 const Subnav = ({ children }) => {
   const style = {
     width: '100%',
-    height: '30px',
+    minHeight: '30px',
     backgroundColor: '#FB3126',
     display: 'flex',
     alignItems: 'center',
@@ -12,8 +12,9 @@ const Subnav = ({ children }) => {
   };
   const containerStyle = {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   };
   return (
     <div style={style}>

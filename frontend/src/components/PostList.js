@@ -9,6 +9,12 @@ class PostList extends React.Component {
     this.props.onMount();
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.category !== this.props.category) {
+  //     this.props.onMount();
+  //   }
+  // }
+
   render() {
     const { onPostClick, posts, sortOrder } = this.props;
     // get array sorted in specified order
@@ -29,7 +35,7 @@ class PostList extends React.Component {
       });
 
     return (
-      <div style={{ width: '90%', margin: '0 auto' }}>
+      <div>
         {postsArray.map(post => (
           <PostContainer
             key={post.id}

@@ -27,7 +27,7 @@ class NewPostForm extends Component {
       timestamp: Date.now(),
       body,
       category,
-      name,
+      author: name,
       title,
     };
   }
@@ -58,10 +58,13 @@ class NewPostForm extends Component {
     const { categories } = this.props;
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
+        <h2>Add a post</h2>
         <label htmlFor="title">
           Post Title:
           <br />
           <input
+            style={{ margin: 0 }}
+            className="edit-form__input edit-form__input--text"
             name="title"
             type="text"
             value={this.state.title}
@@ -75,6 +78,8 @@ class NewPostForm extends Component {
           Your Name:
           <br />
           <input
+            style={{ margin: 0 }}
+            className="edit-form__input edit-form__input--text"
             name="name"
             type="text"
             value={this.state.name}
@@ -100,6 +105,8 @@ class NewPostForm extends Component {
           Post:
           <br />
           <textarea
+            style={{ margin: 0 }}
+            className="edit-form__input edit-form__input--textarea"
             name="body"
             value={this.state.body}
             onChange={e => this.handleBodyChange(e)}
@@ -108,85 +115,11 @@ class NewPostForm extends Component {
         </label>
         <br />
         <br />
-        <button type="submit">Add post</button>
+        <button className="add-post-button" type="submit">Add post</button>
       </form>
     );
   }
 }
-
-// const NewPostForm = ({ categories, onSubmit }) => {
-//   let category;
-//   let name;
-//   let body;
-//   let title;
-
-//   const getPost = () => ({
-//     id: uuid(),
-//     category: category.value,
-//     name: name.value,
-//     body: body.value,
-//     title: title.value,
-//     timestamp: Date.now(),
-//   });
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const post = getPost();
-//     onSubmit(post);
-//   };
-
-//   return (
-//     <form onSubmit={e => handleSubmit(e)}>
-//       <label htmlFor="title">
-//         Post Title:
-//         <br />
-//         <input
-//           name="title"
-//           ref={(input) => { title = input; }}
-//           type="text"
-//           required
-//         />
-//       </label>
-//       <br />
-//       <br />
-//       <label htmlFor="name">
-//         Your Name:
-//         <br />
-//         <input
-//           name="name"
-//           ref={(input) => { name = input; }}
-//           type="text"
-//         />
-//       </label>
-//       <br />
-//       <br />
-//       <label htmlFor="category">
-//         Post category:
-//         <br />
-//         <DropdownList
-//           name="category"
-//           isRequired={true}
-//           ref={(input) => { category = input; }}
-//           list={categories}
-//         />
-//       </label>
-//       <br />
-//       <br />
-//       <label htmlFor="body">
-//         Post:
-//         <br />
-//         <textarea
-//           name="body"
-//           ref={(input) => { body = input; }}
-//           required
-//         />
-//       </label>
-//       <br />
-//       <br />
-//       <button type="submit">Add post</button>
-//     </form>
-//   );
-// };
 
 NewPostForm.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,

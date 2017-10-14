@@ -8,7 +8,7 @@ const PrimaryNav = ({ children }) => {
     width: '100%',
     minHeight: '50px',
     backgroundColor: '#15B5B4',
-    borderBottom: '3px solid lightgrey',
+    borderBottom: '3px solid aliceblue',
   };
   return (
     <div style={style}>

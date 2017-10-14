@@ -1,0 +1,29 @@
+.post-details {
+  border-bottom: 1px solid lightgrey;
+  /* margin-bottom: 15px; */
+  padding: 15px 5px;
+  position: relative;
+}
+
+.post-subtitle {
+  color: grey;
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+
+.post-body {
+  font-size: 1.1rem;
+  margin: 10px 10px;
+}
+
+.post-action {
+  box-sizing: border-box;
+  height: 25px;
+}
+
+.post-actions--details {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

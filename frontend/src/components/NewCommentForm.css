@@ -1,0 +1,28 @@
+.comment-form {
+  border-bottom: 1px solid lightgrey;
+  box-sizing: border-box;
+  padding: 15px 5px;
+}
+
+.comment-form__input {
+  border: 1px solid lightgrey;
+  max-width: 100%;
+}
+
+.comment-form__input--textarea {
+  height: 100px;
+  overflow-y: scroll;
+  resize: none;
+  width: 400px;
+}
+
+.comment-form__button {
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+.comment-form__button:hover {
+  cursor: pointer;
+  color: #26B4B3;
+}

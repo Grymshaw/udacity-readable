@@ -18,12 +18,8 @@ describe('<NewPostView />', () => {
     expect(wrapper.length).to.equal(1);
   });
 
-  it('renders a <PrimaryNav />', () => {
-    expect(wrapper.find('PrimaryNav').length).to.equal(1);
-  });
-
-  it('renders a <Subnav />', () => {
-    expect(wrapper.find('Subnav').length).to.equal(1);
+  it('renders a <Navigation />', () => {
+    expect(wrapper.find('Navigation').length).to.equal(1);
   });
 
   it('renders a <NewPostFormContainer />', () => {

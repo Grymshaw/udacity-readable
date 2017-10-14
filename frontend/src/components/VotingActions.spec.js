@@ -19,8 +19,8 @@ describe('<VotingActions />', () => {
     expect(wrapper.length).to.equal(1);
   });
 
-  it('renders a .voting-actions', () => {
-    expect(wrapper.find('.voting-actions').length).to.equal(1);
+  it('renders a containing div', () => {
+    expect(wrapper.find('div').length).to.equal(1);
   });
 
   it('renders 2 <Button /> components', () => {
