@@ -8,7 +8,8 @@ const CategoryListView = ({ match }) => (
   <div>
     <Navigation match={match} />
     <div className="page">
-      {/* add key property to force re-render when category param in url is different */}
+      {/* Add key property to force re-render when category param in url is different.
+          Solution from https://stackoverflow.com/a/39150493/6490976 */}
       <PostListContainer key={match.params.category} category={match.params.category} />
     </div>
   </div>
