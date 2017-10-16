@@ -2,7 +2,7 @@
 import * as types from '../constants/ActionTypes';
 
 /* SETUP */
-const BASE_URL = 'http://localhost:5001/comments';
+const BASE_URL = 'http://localhost:3001/comments';
 const HEADERS = {
   Authorization: 'whatever',
   'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export const downvoteComment = id => (dispatch) => {
 
 export const fetchPostComments = parentId => (dispatch) => {
   dispatch(fetchPostCommentsRequest());
-  return fetch(`http://localhost:5001/posts/${parentId}/comments`, {
+  return fetch(`http://localhost:3001/posts/${parentId}/comments`, {
     method: 'get',
     headers: HEADERS,
   })

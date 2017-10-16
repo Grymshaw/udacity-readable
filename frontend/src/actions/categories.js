@@ -13,7 +13,7 @@ export const fetchCategoriesSuccess = categories => ({
 
 export const fetchAllCategories = () => (dispatch) => {
   dispatch(fetchCategoriesRequest());
-  return fetch('http://localhost:5001/categories', {
+  return fetch('http://localhost:3001/categories', {
     method: 'get',
     headers: {
       Authorization: 'whatever',

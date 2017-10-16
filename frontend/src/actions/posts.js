@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 
 // *** SETUP ***
-const BASE_URL = 'http://localhost:5001/posts';
+const BASE_URL = 'http://localhost:3001/posts';
 const HEADERS = {
   Authorization: 'whatever',
   'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export const fetchAllPosts = () => (dispatch) => {
 
 export const fetchCategoryPosts = category => (dispatch) => {
   dispatch(fetchCategoryPostsRequest());
-  return fetch(`http://localhost:5001/${category}/posts`, {
+  return fetch(`http://localhost:3001/${category}/posts`, {
     method: 'get',
     headers: HEADERS,
   })
