@@ -18,6 +18,7 @@ const comments = (state = initialState, action) => {
     case types.UPVOTE_COMMENT_REQUEST:
     case types.DOWNVOTE_COMMENT_REQUEST:
     case types.FETCH_POST_COMMENTS_REQUEST:
+    case types.FETCH_ALL_POSTS_COMMENTS_REQUEST:
       return { ...state, isRequestPending: true };
     case types.ADD_COMMENT_SUCCESS:
     case types.EDIT_COMMENT_SUCCESS:
@@ -30,6 +31,7 @@ const comments = (state = initialState, action) => {
       newComments = Object.assign({}, state.comments, comment);
       return { comments: newComments, isRequestPending: false };
     case types.FETCH_POST_COMMENTS_SUCCESS:
+    case types.FETCH_ALL_POSTS_COMMENTS_SUCCESS:
       newComments = action.comments.reduce((acc, cur) => {
         acc[cur.id] = cur;
         return acc;

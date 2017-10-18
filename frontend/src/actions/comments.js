@@ -15,6 +15,9 @@ export const deleteCommentRequest = () => ({ type: types.DELETE_COMMENT_REQUEST 
 export const upvoteCommentRequest = () => ({ type: types.UPVOTE_COMMENT_REQUEST });
 export const downvoteCommentRequest = () => ({ type: types.DOWNVOTE_COMMENT_REQUEST });
 export const fetchPostCommentsRequest = () => ({ type: types.FETCH_POST_COMMENTS_REQUEST });
+export const fetchAllPostsCommentsRequest = () => ({
+  type: types.FETCH_ALL_POSTS_COMMENTS_REQUEST,
+});
 
 export const setIsCommentEditing = (isEditing, commentId) => ({
   type: types.SET_IS_COMMENT_EDITING,
@@ -50,6 +53,11 @@ export const downvoteCommentSuccess = comment => ({
 
 export const fetchPostCommentsSuccess = comments => ({
   type: types.FETCH_POST_COMMENTS_SUCCESS,
+  comments,
+});
+
+export const fetchAllPostsCommentsSuccess = comments => ({
+  type: types.FETCH_ALL_POSTS_COMMENTS_SUCCESS,
   comments,
 });
 
@@ -116,4 +124,17 @@ export const fetchPostComments = parentId => (dispatch) => {
   })
     .then(res => res.json())
     .then(json => dispatch(fetchPostCommentsSuccess(json)));
+};
+
+export const fetchAllPostsComments = parentIds => (dispatch) => {
+  dispatch(fetchAllPostsCommentsRequest());
+  return Promise.all(
+    parentIds.map(id =>
+      fetch(`http://localhost:3001/posts/${id}/comments`, { method: 'get', headers: HEADERS })))
+    .then(responses => responses.map(res => res.json()))
+    .then(jsons =>
+      Promise.all(jsons)
+        .then(data => data.reduce((acc, cur) => [...acc, ...cur], []))
+        .then(comments => dispatch(fetchAllPostsCommentsSuccess(comments))),
+    );
 };

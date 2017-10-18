@@ -43,6 +43,13 @@ describe('<PostListContainer />', () => {
     window.fetch.returns(Promise.resolve(res));
 
     store = configureMockStore()({
+      comments: {
+        comments: {
+          '0': { parentId: '0' },
+          '1': { parentId: '1' },
+        },
+        isRequestPending: false,
+      },
       posts: {
         posts: {
           '8xf0y6ziyjabvozdd253nd': {
@@ -60,7 +67,6 @@ describe('<PostListContainer />', () => {
       },
       sortOrder: { order: 'votesDescending' },
     });
-    // sinon.spy(store, 'dispatch');
     wrapper = mount(
       <Provider store={store}>
         <PostListContainer />
@@ -93,6 +99,7 @@ describe('<PostListContainer />', () => {
     it('receives `onMount` in props', () => {
       // onMount called when <PostList /> mounts
       expect(store.getActions()).to.deep.include({ type: types.FETCH_ALL_POSTS_REQUEST });
+      expect(store.getActions()).to.deep.include({ type: types.FETCH_ALL_POSTS_COMMENTS_REQUEST });
     });
 
     it('when passed `category` prop calls fetchCategory action creator', () => {
@@ -110,6 +117,13 @@ describe('<PostListContainer />', () => {
       window.fetch.returns(Promise.resolve(res));
       // also must re-initialize store
       store = configureMockStore()({
+        comments: {
+          comments: {
+            '0': { parentId: '0' },
+            '1': { parentId: '1' },
+          },
+          isRequestPending: false,
+        },
         posts: {
           posts: {
             '8xf0y6ziyjabvozdd253nd': {

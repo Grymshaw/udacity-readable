@@ -27,7 +27,7 @@ class Post extends Component {
   }
 
   render() {
-    const { isEditing, onCancelEdit, onDelete, onEdit,
+    const { commentCount, isEditing, onCancelEdit, onDelete, onEdit,
       onEditSubmit, onPostClick, post } = this.props;
     return (
       <div className="post">
@@ -79,6 +79,8 @@ class Post extends Component {
               {post.voteScore} point{post.voteScore === 1 ? '' : 's'} by {post.author} ({moment(post.timestamp).fromNow()})
               <br />
               in {post.category}
+              <br />
+              {commentCount} comment{commentCount === 1 ? '' : 's'}
             </div>
             <div className="post-actions">
               <PostVotingContainer postId={post.id} />
@@ -109,6 +111,7 @@ class Post extends Component {
 }
 
 Post.propTypes = {
+  commentCount: PropTypes.number,
   isEditing: PropTypes.bool,
   onCancelEdit: PropTypes.func,
   onDelete: PropTypes.func,
@@ -127,6 +130,7 @@ Post.propTypes = {
 };
 
 Post.defaultProps = {
+  commentCount: 0,
   isEditing: false,
   onCancelEdit: () => {},
   onDelete: () => {},

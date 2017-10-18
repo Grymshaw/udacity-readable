@@ -9,14 +9,9 @@ class PostList extends React.Component {
     this.props.onMount();
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.category !== this.props.category) {
-  //     this.props.onMount();
-  //   }
-  // }
-
   render() {
-    const { onPostClick, posts, sortOrder } = this.props;
+    const { comments, onPostClick, posts, sortOrder } = this.props;
+
     // get array sorted in specified order
     const postsArray = Object.keys(posts)
       .map(key => posts[key])
@@ -34,6 +29,14 @@ class PostList extends React.Component {
         }
       });
 
+    // Function to count # of comments per post
+    const commentCounts = Object.keys(comments)
+      .map(key => comments[key])
+      .reduce((acc, cur) => {
+        acc[cur.parentId] ? acc[cur.parentId] += 1 : acc[cur.parentId] = 1;
+        return acc;
+      }, {});
+
     return (
       <div>
         {postsArray.map(post => (
@@ -41,6 +44,7 @@ class PostList extends React.Component {
             key={post.id}
             onPostClick={() => onPostClick(post)}
             post={post}
+            commentCount={commentCounts[post.id]}
           />
         ))}
       </div>
@@ -52,12 +56,14 @@ PostList.defaultProps = {
   onMount: () => {},
   onPostClick: () => {},
   posts: [],
+  sortOrder: '',
 };
 
 PostList.propTypes = {
   onMount: PropTypes.func,
   onPostClick: PropTypes.func,
   posts: PropTypes.arrayOf(PropTypes.object),
+  sortOrder: PropTypes.string,
 };
 
 export default PostList;

@@ -28,12 +28,19 @@ const posts = [
   },
 ];
 
+const comments = {
+  '0': { parentId: '0' },
+  '1': { parentId: '1' },
+};
+
 describe('<PostList />', () => {
   let store;
   let wrapper;
   beforeEach(() => {
-    store = configureMockStore()({ posts: { isEditing: false } });
-    wrapper = shallow(<PostList posts={posts} store={store} />);
+    store = configureMockStore()({
+      posts: { isEditing: false },
+    });
+    wrapper = shallow(<PostList comments={comments} posts={posts} store={store} />);
   });
 
   it('renders successfully', () => {

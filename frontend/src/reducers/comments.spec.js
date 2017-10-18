@@ -104,6 +104,13 @@ describe('comments reducer', () => {
       deepFreeze(action);
       expect(comments(stateBefore, action)).to.eql({ comments: {}, isRequestPending: true });
     });
+    it('should handle FETCH_ALL_POSTS_COMMENTS_REQUEST', () => {
+      const stateBefore = { comments: {}, isRequestPending: false };
+      const action = { type: types.FETCH_ALL_POSTS_COMMENTS_REQUEST };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      expect(comments(stateBefore, action)).to.eql({ comments: {}, isRequestPending: true });
+    });
   });
   describe('comments reducer <blank>_SUCCESSes', () => {
     const currentDate = Date.now();
@@ -416,6 +423,41 @@ describe('comments reducer', () => {
         isRequestPending: false,
       };
       expect(comments(stateBefore, action)).to.eql(stateAfter);
+    });
+    it('should handle FETCH_ALL_POSTS_COMMENTS_SUCCESSS', () => {
+      const responseComments = [
+        {
+          author: 'thingtwo',
+          body: 'Hi there! I am a COMMENT.',
+          deleted: false,
+          id: '0',
+          parentDeleted: false,
+          parentId: '8xf0y6ziyjabvozdd253nd',
+          timestamp: 1468166872634,
+          voteScore: 6,
+        },
+        {
+          author: 'thingone',
+          body: 'Comments. Are. Cool.',
+          deleted: false,
+          id: '1',
+          parentDeleted: false,
+          parentId: '8xf0y6ziyjabvozdd253nd',
+          timestamp: 1469479767190,
+          voteScore: -5,
+        },
+      ];
+      const stateBefore = { comments: {}, isRequestPending: true };
+      const action = { type: types.FETCH_ALL_POSTS_COMMENTS_SUCCESS, comments: responseComments };
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      expect(comments(stateBefore, action)).to.eql({
+        comments: {
+          '0': responseComments[0],
+          '1': responseComments[1],
+        },
+        isRequestPending: false,
+      });
     });
   });
 });
