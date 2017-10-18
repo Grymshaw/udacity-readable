@@ -4,6 +4,7 @@ import * as actions from '../actions/posts';
 import Post from './Post';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  commentCount: ownProps.commentCount,
   onCancelEdit: () => dispatch(actions.setIsPostEditing(false, null)),
   onDelete: () => {
     actions.deletePost(ownProps.post.id)(dispatch)

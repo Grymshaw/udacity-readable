@@ -1,8 +1,8 @@
 /* eslint "no-undef": 0 */
-
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import sinon from 'sinon';
 
 import * as actions from './comments';
 import * as types from '../constants/ActionTypes';
@@ -97,6 +97,17 @@ describe('comment actions', () => {
       type: types.SET_IS_COMMENT_EDITING,
       isEditing: true,
       currentCommentEditing: '0',
+    });
+  });
+  it('fetchAllPostsCommentsRequest creates FETCH_ALL_POSTS_COMMENTS_REQUEST', () => {
+    expect(actions.fetchAllPostsCommentsRequest()).to.eql({
+      type: types.FETCH_ALL_POSTS_COMMENTS_REQUEST,
+    });
+  });
+  it('fetchAllPostsCommentsSuccess creates FETCH_ALL_POSTS_COMMENTS_SUCCESS', () => {
+    expect(actions.fetchAllPostsCommentsSuccess([comment, comment, comment])).to.eql({
+      type: types.FETCH_ALL_POSTS_COMMENTS_SUCCESS,
+      comments: [comment, comment, comment],
     });
   });
 });
@@ -262,5 +273,67 @@ describe('async comment actions', () => {
       expect(storeActions.length).to.equal(2);
       expect(storeActions).to.eql(expectedActions);
     });
+  });
+
+  it('creates FETCH_ALL_POSTS_COMMENTS_SUCCESS when finished fetching all posts comments', () => {
+    const data1 = [
+      {
+        author: 'thingtwo',
+        body: 'Hi there! I am a COMMENT.',
+        deleted: false,
+        id: '894tuq4ut84ut8v4t8wun89g',
+        parentDeleted: false,
+        parentId: '0',
+        timestamp: 1468166872634,
+        voteScore: 6,
+      },
+    ];
+    const res1 = new window.Response(
+      JSON.stringify(data1),
+      {
+        status: 200,
+        headers: { Authorization: 'whatever', 'Content-Type': 'application/json' },
+      },
+    );
+
+    const data2 = [
+      {
+        author: 'baasdf',
+        body: 'comment body',
+        deleted: false,
+        id: '2',
+        parentDeleted: false,
+        parentId: '1',
+        timestamp: 1468166872634,
+        voteScore: -1,
+      },
+    ];
+    const res2 = new window.Response(
+      JSON.stringify(data2),
+      {
+        status: 200,
+        headers: { Authorization: 'whatever', 'Content-Type': 'application/json' },
+      },
+    );
+
+    const store = mockStore({});
+
+    sinon.stub(window, 'fetch');
+    window.fetch.onFirstCall().returns(Promise.resolve(res1));
+    window.fetch.onSecondCall().returns(Promise.resolve(res2));
+
+    const expectedActions = [
+      { type: types.FETCH_ALL_POSTS_COMMENTS_REQUEST },
+      {
+        type: types.FETCH_ALL_POSTS_COMMENTS_SUCCESS,
+        comments: [...data1, ...data2],
+      },
+    ];
+
+    store.dispatch(actions.fetchAllPostsComments(['0', '1']))
+      .then(() => {
+        expect(store.getActions().length).to.equal(2);
+        expect(store.getActions()).to.eql(expectedActions);
+      });
   });
 });
