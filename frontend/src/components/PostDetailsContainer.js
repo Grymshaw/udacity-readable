@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state, ownProps) => ({
   isEditing: state.posts.isEditing && state.posts.currentPostEditing === ownProps.id,
+  isRequestPending: state.posts.isRequestPending,
   post: state.posts.posts[state.posts.currentPost],
 });
 

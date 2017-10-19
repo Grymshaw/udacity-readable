@@ -19,15 +19,14 @@ import '../node_modules/normalize.css/normalize.css';
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
-        {/* routes */}
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/new" component={NewPostView} />
-          <Route exact path="/:category" component={CategoryListView} />
-          <Route exact path="/:category/:id" component={PostDetailsView} />
-        </Switch>
-      </div>
+      {/* routes */}
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route exact path="/new" component={NewPostView} />
+        <Route exact path="/404"><p>Resource not found</p></Route>
+        <Route exact path="/:category" component={CategoryListView} />
+        <Route exact path="/:category/:id" render={props => <PostDetailsView {...props} store={store} />} />
+      </Switch>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),

@@ -18,9 +18,9 @@ class PostDetails extends Component {
   }
 
   componentDidMount() {
-    const { onMount, id } = this.props;
+    const { id, onMount, post } = this.props;
     onMount(id)
-      .then(() => this.setState({ body: this.props.post.body, title: this.props.post.title }));
+      .then(() => this.setState({ body: post.body, title: post.title }));
   }
 
   handleBodyChange(e) {
@@ -32,82 +32,88 @@ class PostDetails extends Component {
   }
 
   render() {
-    const { isEditing, onDelete, onEdit, onEditCancel, onEditSubmit, post } = this.props;
+    const { isEditing, isRequestPending, onDelete, onEdit,
+      onEditCancel, onEditSubmit, post } = this.props;
+
     return (
-      <div className="post-details">
-        {isEditing
-          ? <form className="edit-form">
-            <label htmlFor="title">Title</label>
-            <input
-              className="edit-form__input edit-form__input--text"
-              name="title"
-              type="text"
-              value={this.state.title}
-              onChange={e => this.handleTitleChange(e)}
-            />
-            <br />
-            <label htmlFor="body">Body</label>
-            <textarea
-              className="edit-form__input edit-form__input--textarea"
-              name="body"
-              value={this.state.body}
-              onChange={e => this.handleBodyChange(e)}
-            />
-            <br />
-            <button
-              className="edit-action edit-action--cancel"
-              onClick={() => {
-                onEditCancel();
-                // reset state to initial post
-                this.setState({ body: post.body, title: post.title });
-              }}
-            >
-              Cancel
-            </button>
-            <button
-              className="edit-action edit-action--submit"
-              onClick={() => onEditSubmit({
-                body: this.state.body,
-                title: this.state.title,
-              })}
-            >
-              Submit changes
-            </button>
-            <br />
-          </form>
-          : <div>
-            <div className="post-title post-title--details">{post.title}</div>
-            <div className="post-subtitle">
-              {post.voteScore} point{post.voteScore === 1 ? '' : 's'} by {post.author} ({moment(post.timestamp).fromNow()})
-              <br />
-              in {post.category}
-            </div>
-            <div className="post-body">
-              {post.body}
-            </div>
+      <div>
+        {(isRequestPending)
+          ? <p>Loading...</p>
+          : <div className="post-details">
+            {isEditing
+              ? <form className="edit-form">
+                <label htmlFor="title">Title</label>
+                <input
+                  className="edit-form__input edit-form__input--text"
+                  name="title"
+                  type="text"
+                  value={this.state.title}
+                  onChange={e => this.handleTitleChange(e)}
+                />
+                <br />
+                <label htmlFor="body">Body</label>
+                <textarea
+                  className="edit-form__input edit-form__input--textarea"
+                  name="body"
+                  value={this.state.body}
+                  onChange={e => this.handleBodyChange(e)}
+                />
+                <br />
+                <button
+                  className="edit-action edit-action--cancel"
+                  onClick={() => {
+                    onEditCancel();
+                    // reset state to initial post
+                    this.setState({ body: post.body, title: post.title });
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="edit-action edit-action--submit"
+                  onClick={() => onEditSubmit({
+                    body: this.state.body,
+                    title: this.state.title,
+                  })}
+                >
+                  Submit changes
+                </button>
+                <br />
+              </form>
+              : <div>
+                <div className="post-title post-title--details">{post.title}</div>
+                <div className="post-subtitle">
+                  {post.voteScore} point{post.voteScore === 1 ? '' : 's'} by {post.author} ({moment(post.timestamp).fromNow()})
+                  <br />
+                  in {post.category}
+                </div>
+                <div className="post-body">
+                  {post.body}
+                </div>
 
-            <div className="post-actions--details">
-              <PostVotingContainer postId={post.id} />
-              <div>
-                <span
-                  className="post-action post-action--edit"
-                  onClick={onEdit}
-                  role="button"
-                  tabIndex={0}
-                >
-                  Edit
-                </span>
-                <span
-                  className="post-action post-action--delete"
-                  onClick={onDelete}
-                  role="button"
-                  tabIndex={0}
-                >
-                  Delete
-                </span>
+                <div className="post-actions--details">
+                  <PostVotingContainer postId={post.id} />
+                  <div>
+                    <span
+                      className="post-action post-action--edit"
+                      onClick={onEdit}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      Edit
+                    </span>
+                    <span
+                      className="post-action post-action--delete"
+                      onClick={onDelete}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      Delete
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-
+            }
           </div>
         }
       </div>
