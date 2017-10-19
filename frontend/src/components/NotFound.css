@@ -1,0 +1,28 @@
+.not-found-wrapper {
+  margin: 10% auto;
+  padding: 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgrey;
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: 300px;
+  max-height: 90%;
+  min-height: 100px;
+  text-align: center;
+  width: 90%;
+}
+
+.not-found-text {
+  font-size: 1.4rem;
+}
+
+.not-found-link {
+  color: blue;
+  text-decoration: underline;
+}
+
+.not-found-link:hover {
+  cursor: pointer;
+}

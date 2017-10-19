@@ -9,6 +9,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import App from './components/App';
 import CategoryListView from './components/CategoryListView';
 import NewPostView from './components/NewPostView';
+import NotFound from './components/NotFound';
 import PostDetailsView from './components/PostDetailsView';
 
 import { history, store } from './store';
@@ -23,7 +24,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={App} />
         <Route exact path="/new" component={NewPostView} />
-        <Route exact path="/404"><p>Resource not found</p></Route>
+        <Route exact path="/404" component={NotFound} />
         <Route exact path="/:category" component={CategoryListView} />
         <Route exact path="/:category/:id" render={props => <PostDetailsView {...props} store={store} />} />
       </Switch>
